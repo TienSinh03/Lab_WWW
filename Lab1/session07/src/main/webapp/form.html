@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Upload</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+        }
+        .container {
+
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>File Upload to Database (multipart/form-data)</h1>
+    <form method="post" action="fileUploadDB" enctype="multipart/form-data">
+        <table border="0">
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="firstName" size="50"/></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="lastName" size="50"/></td>
+            </tr>
+            <tr>
+                <td>Portrait Photo:</td>
+                <td><input type="file" name="photo" size="50"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Save">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>
