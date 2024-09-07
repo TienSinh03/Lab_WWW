@@ -1,9 +1,6 @@
 package vn.edu.iuh.fit.week01_lab.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "role")
+@NamedQueries({
+        @NamedQuery(
+                name = "Role.findRoleByIdAccount",
+                query = "select r from Role r join GrantAccess ga on r.role_id = ga.role.role_id where ga.account.account_id = :account_id"
+        )
+})
 public class Role {
     @Id
     @Column(columnDefinition = "varchar(50)")

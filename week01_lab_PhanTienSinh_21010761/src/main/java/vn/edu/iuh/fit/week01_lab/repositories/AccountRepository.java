@@ -54,11 +54,17 @@ public class AccountRepository {
         return em.createNamedQuery("Account.findAccountsByRole", Account.class).getResultList();
     }
 
-    public Account identifyAccount(String account_id, String password) {
-        return em.createNamedQuery("Account.identifyAccount", Account.class)
-                .setParameter("account_id", account_id)
-                .setParameter("password", password)
-                .getSingleResult();
+    public Account findAccountByIdPassword(String account_id, String password) {
+        try {
+            return em.createNamedQuery("Account.findAccountByIdPassword", Account.class)
+                    .setParameter("account_id", account_id)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }

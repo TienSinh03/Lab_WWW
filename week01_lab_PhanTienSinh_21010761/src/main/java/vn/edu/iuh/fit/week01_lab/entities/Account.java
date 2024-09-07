@@ -13,7 +13,7 @@ import lombok.*;
 @Table(name = "account")
 @NamedQueries({
         @NamedQuery(
-                name = "Account.identifyAccount",
+                name = "Account.findAccountByIdPassword",
                 query = "select a from Account a where a.account_id = :account_id and a.password = :password"
         ),
         @NamedQuery(

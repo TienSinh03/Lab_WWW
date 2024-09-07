@@ -11,11 +11,17 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="controller-servlet" method="get">
-        <input type="hidden" name="login" value="LOGIN">
-        <input type="text" name="username" placeholder="Username">
+    <form action="controller-servlet" method="post">
+        <input type="hidden" name="action" value="login">
+        <input type="text" name="account_id" placeholder="Username">
         <input type="password" name="password" placeholder="Password">
         <input type="submit" value="Login">
     </form>
+    <script>
+        <% if (request.getAttribute("error") != null) { %>
+        alert("Invalid username or password");
+        <% } %>
+    </script>
+
 </body>
 </html>
