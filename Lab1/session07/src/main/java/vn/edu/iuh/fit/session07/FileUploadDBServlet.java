@@ -33,9 +33,6 @@ import java.util.Random;
 @MultipartConfig(maxFileSize = 16177215) // upload file's size up to 16MB
 public class FileUploadDBServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    private static final int BUFFER_SIZE = 4096;
-    private static final String SAVE_DIR = "images";
     private ContactDao contactDao;
 
     @Override
