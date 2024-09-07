@@ -3,6 +3,7 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="PhanTienSinh_21010761_session:war" />
+      <artifact name="PhanTienSinh_21010761_session:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,21 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e2f0f1a-a343-40f5-8c40-6da0a5aa5f0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/RegisterServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/beans/HandleRegister.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/beans/CheckLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/beans/CheckLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/dao/DaoLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/dao/DaoLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/dao/impl/LoginDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/dao/impl/LoginDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/entity/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/iuh/fit/session01/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../session07/src/main/java/vn/edu/iuh/fit/session07/FileUploadDBServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../session07/src/main/java/vn/edu/iuh/fit/session07/FileUploadDBServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/controllers/ControllerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/controllers/ControllerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/entities/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/entities/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/repositories/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/repositories/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/services/AccountServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/java/vn/edu/iuh/fit/week01_lab/services/AccountServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../week01_lab_PhanTienSinh_21010761/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +39,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
@@ -73,6 +70,7 @@
     &quot;Tomcat Server.Tomcat 10.1.11.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/Worksapce/Java/Java(WWW)/Lab1/Session01&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
@@ -210,7 +208,9 @@
       <workItem from="1724504077514" duration="217000" />
       <workItem from="1724504417634" duration="257000" />
       <workItem from="1724511803673" duration="6598000" />
-      <workItem from="1724940512482" duration="1421000" />
+      <workItem from="1724940512482" duration="5202000" />
+      <workItem from="1725091562532" duration="66000" />
+      <workItem from="1725726322424" duration="625000" />
     </task>
     <task id="LOCAL-00001" summary="Add project session 01">
       <option name="closed" value="true" />
