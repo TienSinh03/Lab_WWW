@@ -57,7 +57,7 @@ public class ControllerServlet extends HttpServlet {
                 } else {
                     Account account = accountServices.getInforAccount(account_id);
                     String html = "<html><head><title>Account Information</title></head><body >" +
-                            "<a href='index.jsp'>Log out</a >" +
+                            "<a href='login.jsp'>Log out</a >" +
                             "<h1>Account Information</h1 >" +
                             "<p>Account ID: " + account.getAccount_id() + "</p >" +
                             "<p>Full Name: " + account.getFull_name() + "</p >" +
@@ -69,8 +69,8 @@ public class ControllerServlet extends HttpServlet {
                 }
             } else {
                 req.setAttribute("error", "Login failed!!");
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
-                resp.sendRedirect("index.jsp");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
+                resp.sendRedirect("login.jsp");
             }
 
         } else if (action.equalsIgnoreCase("add")) {

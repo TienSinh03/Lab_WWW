@@ -31,7 +31,6 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Status</th>
-            <%--            <th colspan="2">Action</th>--%>
         </tr>
         <%
             for (Account acc : accounts) {
