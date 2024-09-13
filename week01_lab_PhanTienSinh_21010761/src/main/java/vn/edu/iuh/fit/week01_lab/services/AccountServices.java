@@ -2,7 +2,9 @@ package vn.edu.iuh.fit.week01_lab.services;
 
 import jakarta.inject.Inject;
 import vn.edu.iuh.fit.week01_lab.entities.Account;
+import vn.edu.iuh.fit.week01_lab.entities.Log;
 import vn.edu.iuh.fit.week01_lab.repositories.AccountRepository;
+import vn.edu.iuh.fit.week01_lab.repositories.LogRepository;
 
 import java.util.List;
 
@@ -10,9 +12,11 @@ public class AccountServices {
 
 
     private final AccountRepository accountRepository;
+    private final LogRepository logRepository;
 
     public AccountServices() {
         accountRepository = new AccountRepository();
+        logRepository = new LogRepository();
     }
 
     public boolean verifyAccount(String account_id, String password) {
@@ -53,8 +57,8 @@ public class AccountServices {
     }
 
     // write log the account when user login successfully and log out
-    public void writeLog(Account account, String action) {
-
+    public boolean writeLog(Log log) {
+       return logRepository.insertLog(log);
     }
 
 

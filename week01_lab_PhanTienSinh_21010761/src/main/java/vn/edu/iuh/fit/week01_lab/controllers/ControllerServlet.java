@@ -8,12 +8,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.iuh.fit.week01_lab.entities.Account;
+import vn.edu.iuh.fit.week01_lab.entities.Log;
 import vn.edu.iuh.fit.week01_lab.entities.Role;
 import vn.edu.iuh.fit.week01_lab.services.AccountServices;
 import vn.edu.iuh.fit.week01_lab.services.RoleServices;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 
 @WebServlet(name = "ControllerServlet", urlPatterns = "/controller-servlet")
@@ -56,9 +59,15 @@ public class ControllerServlet extends HttpServlet {
            } else {
                 accounts = accountServices.getAllAccountByRole(roleId);
            }
+           // implement session set attribute accounts to dashboard.jsp
            session.setAttribute("accounts", accounts);
               req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
-
+       } else if(action.equals("logout")) {
+              Log log = (Log) session.getAttribute("log");
+              log.setLogoutTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
+              accountServices.writeLog(log);
+                session.invalidate();
+              req.getRequestDispatcher("login.jsp").forward(req, resp);
        }
     }
 
@@ -74,14 +83,23 @@ public class ControllerServlet extends HttpServlet {
             Role role = roleServices.getRoleByIdAccount(account_id);
             boolean result = accountServices.verifyAccount(account_id, password);
             if (result) {
+                Log log = new Log();
                 if(role.getRole_id().equals("admin")){
+                    // set log
+                    log.setAccountId(account_id);
+                    log.setNotes("login");
+                    log.setLoginTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
+                    HttpSession session = req.getSession();
+                    session.setAttribute("log", log);
+
+                    // set account
                     req.getServletContext().setAttribute("account", accountServices.getInforAccount(account_id));
                     req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
                     resp.sendRedirect("dashboard.jsp");
                 } else {
                     Account account = accountServices.getInforAccount(account_id);
                     String html = "<html><head><title>Account Information</title></head><body >" +
-                            "<a href='login.jsp'>Log out</a >" +
+                            "<a href='controller-servlet?action=logout'>Log out</a >" +
                             "<h1>Account Information</h1 >" +
                             "<p>Account ID: " + account.getAccount_id() + "</p >" +
                             "<p>Full Name: " + account.getFull_name() + "</p >" +
@@ -90,7 +108,16 @@ public class ControllerServlet extends HttpServlet {
                             "<p>Status: " + account.getStatus() + "</p >" +
                             "</body></html >";
                     out.println(html);
+
+                    // set log
+                    log.setAccountId(account_id);
+                    log.setNotes("User login");
+                    log.setLoginTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
+                    HttpSession session = req.getSession();
+                    session.setAttribute("log", log);
                 }
+
+
             } else {
                 req.setAttribute("error", "Login failed!!");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
