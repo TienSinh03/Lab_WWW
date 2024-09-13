@@ -42,6 +42,22 @@ public class AccountRepository {
         }
     }
 
+    public boolean updateStatusDelete(String account_id) {
+        String sql = "Update Account a set a.status = -1 where a.account_id = :account_id";
+        try {
+            et.begin();
+            em.createQuery(sql)
+                    .setParameter("account_id", account_id)
+                    .executeUpdate();
+            et.commit();
+            return true;
+        } catch (Exception e) {
+            et.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<Account> findAll(){
         return em.createNamedQuery("Account.findAll", Account.class).getResultList();
     }

@@ -37,6 +37,15 @@ public class ControllerServlet extends HttpServlet {
            Account account = accountServices.getInforAccount(account_id);
            session.setAttribute("account", account);
            req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
+       } else if (action.equalsIgnoreCase("delete")) {
+           String account_id = req.getParameter("id");
+           Account account = accountServices.getInforAccount(account_id);
+           if (accountServices.deleteAccount(account)) {
+               resp.sendRedirect("dashboard.jsp");
+           } else {
+               req.setAttribute("error", "Delete account failed!!");
+               req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+           }
        }
     }
 

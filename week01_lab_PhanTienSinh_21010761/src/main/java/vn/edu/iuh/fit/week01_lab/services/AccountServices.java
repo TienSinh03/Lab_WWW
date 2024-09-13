@@ -44,6 +44,10 @@ public class AccountServices {
         return accountRepository.findAll();
     }
 
+    public boolean deleteAccount(Account account) {
+        return accountRepository.updateStatusDelete(account.getAccount_id());
+    }
+
     // write log the account when user login successfully and log out
     public void writeLog(Account account, String action) {
 

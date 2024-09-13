@@ -53,6 +53,7 @@
             <select class="form-select" id="status" name="status">
                 <option value="1" <%=status.equals("1") ? "selected" : ""%>>Active</option>
                 <option value="0" <%=status.equals("0") ? "selected" : ""%>>Inactive</option>
+                <option value="-1" <%=status.equals("-1") ? "selected" : ""%>>Delete</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Add</button>

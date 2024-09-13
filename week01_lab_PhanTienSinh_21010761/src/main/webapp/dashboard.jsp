@@ -49,6 +49,7 @@
             <td><%=acc.getStatus() %>
             </td>
             <td><a href="controller-servlet?action=edit&id=<%=acc.getAccount_id()%>">Edit</a></td>
+            <td><a href="controller-servlet?action=delete&id=<%=acc.getAccount_id()%>">Delete</a></td>
         </tr>
         <%
             }
