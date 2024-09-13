@@ -14,6 +14,7 @@ import vn.edu.iuh.fit.week01_lab.services.RoleServices;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "ControllerServlet", urlPatterns = "/controller-servlet")
 public class ControllerServlet extends HttpServlet {
@@ -46,6 +47,18 @@ public class ControllerServlet extends HttpServlet {
                req.setAttribute("error", "Delete account failed!!");
                req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
            }
+       } else if(action.equals("searchAccountByRole")) {
+           String roleId = req.getParameter("selectRoleId");
+           List<Account> accounts;
+           System.out.println(roleId);
+           if(roleId == null || roleId.equals("0")) {
+               accounts = accountServices.getAllInforAccount();
+           } else {
+                accounts = accountServices.getAllAccountByRole(roleId);
+           }
+           session.setAttribute("accounts", accounts);
+              req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+
        }
     }
 
@@ -62,6 +75,8 @@ public class ControllerServlet extends HttpServlet {
             boolean result = accountServices.verifyAccount(account_id, password);
             if (result) {
                 if(role.getRole_id().equals("admin")){
+                    req.getServletContext().setAttribute("account", accountServices.getInforAccount(account_id));
+                    req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
                     resp.sendRedirect("dashboard.jsp");
                 } else {
                     Account account = accountServices.getInforAccount(account_id);

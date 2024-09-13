@@ -66,8 +66,15 @@ public class AccountRepository {
         return em.find(Account.class, id);
     }
 
-    public List<Account> findAccountsByRole() {
-        return em.createNamedQuery("Account.findAccountsByRole", Account.class).getResultList();
+    public List<Account> findAccountsByRole(String role) {
+        try {
+            return em.createNamedQuery("Account.findAccountsByRole", Account.class)
+                    .setParameter("role_id", role)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Account findAccountByIdPassword(String account_id, String password) {

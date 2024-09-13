@@ -8,9 +8,18 @@ import vn.edu.iuh.fit.week01_lab.entities.Role;
 import vn.edu.iuh.fit.week01_lab.repositories.AccountRepository;
 import vn.edu.iuh.fit.week01_lab.repositories.RoleRepository;
 
+import java.util.List;
+
 public class RoleServices {
-    @Inject
-    private RoleRepository roleRepository;
+
+    private final RoleRepository roleRepository;
+    public RoleServices() {
+        roleRepository = new RoleRepository();
+    }
+
+    public List<Role> findAllRoles() {
+        return roleRepository.findAllRoles();
+    }
 
     public Role getRoleByIdAccount(String account_id) {
         return roleRepository.getRoleByIdAccount(account_id);

@@ -5,6 +5,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import vn.edu.iuh.fit.week01_lab.entities.Role;
 
+import java.util.List;
+
 public class RoleRepository {
     private EntityManager em;
     private EntityTransaction et;
@@ -12,6 +14,15 @@ public class RoleRepository {
     public RoleRepository() {
         em = Persistence.createEntityManagerFactory("JPA_MariaDB").createEntityManager();
         et = em.getTransaction();
+    }
+
+    public List<Role> findAllRoles() {
+        try {
+            return em.createNamedQuery("Role.findAll", Role.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Role getRoleByIdAccount(String account_id) {

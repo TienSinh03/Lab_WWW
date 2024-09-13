@@ -8,8 +8,12 @@ import java.util.List;
 
 public class AccountServices {
 
-    @Inject
-    private AccountRepository accountRepository;
+
+    private final AccountRepository accountRepository;
+
+    public AccountServices() {
+        accountRepository = new AccountRepository();
+    }
 
     public boolean verifyAccount(String account_id, String password) {
         Account account = accountRepository.findAccountByIdPassword(account_id, password);
@@ -54,5 +58,7 @@ public class AccountServices {
     }
 
 
-
+    public List<Account> getAllAccountByRole(String roleId) {
+        return accountRepository.findAccountsByRole(roleId);
+    }
 }

@@ -1,12 +1,12 @@
 package vn.edu.iuh.fit.week01_lab.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 @Entity
 @Table(name = "role")
@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
         @NamedQuery(
                 name = "Role.findRoleByIdAccount",
                 query = "select r from Role r join GrantAccess ga on r.role_id = ga.role.role_id where ga.account.account_id = :account_id"
-        )
+        ),
+        @NamedQuery(name = "Role.findAll", query = "select r from Role r")
 })
 public class Role {
     @Id
