@@ -4,6 +4,8 @@ import jakarta.inject.Inject;
 import vn.edu.iuh.fit.week01_lab.entities.Account;
 import vn.edu.iuh.fit.week01_lab.repositories.AccountRepository;
 
+import java.util.List;
+
 public class AccountServices {
 
     @Inject
@@ -14,11 +16,23 @@ public class AccountServices {
         return account != null;
     }
 
+    public boolean checkExistsAccount(Account account) {
+        return accountRepository.findAccountById(account.getAccount_id()) != null;
+    }
+
+    public boolean insertAccount(Account account) {
+        if(checkExistsAccount(account)) {
+            return false;
+        } else {
+            return accountRepository.insertAccount(account);
+        }
+    }
+
     public Account getInforAccount(String account_id) {
         return accountRepository.findAccountById(account_id);
     }
 
-    public Account getAllInforAccount() {
+    public List<Account> getAllInforAccount() {
         return accountRepository.findAll();
     }
 

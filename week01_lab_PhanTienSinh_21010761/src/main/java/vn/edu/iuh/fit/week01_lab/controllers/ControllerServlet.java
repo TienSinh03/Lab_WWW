@@ -23,13 +23,22 @@ public class ControllerServlet extends HttpServlet {
     private RoleServices roleServices;
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+       if (action.equalsIgnoreCase("add")) {
+            req.getRequestDispatcher("addAccount.jsp").forward(req, resp);
+       }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        String account_id = req.getParameter("account_id");
-        String password = req.getParameter("password");
 
+        resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
         if (action.equalsIgnoreCase("login")) {
+            String account_id = req.getParameter("account_id");
+            String password = req.getParameter("password");
             Role role = roleServices.getRoleByIdAccount(account_id);
             boolean result = accountServices.verifyAccount(account_id, password);
             if (result) {
@@ -54,8 +63,21 @@ public class ControllerServlet extends HttpServlet {
                 resp.sendRedirect("index.jsp");
             }
 
-        } else if (action.equals("register")) {
+        } else if (action.equalsIgnoreCase("add")) {
+            String accountID = req.getParameter("account_id");
+            String fullName = req.getParameter("full_name");
+            String email = req.getParameter("email");
+            String phone = req.getParameter("phone");
+            String password = req.getParameter("password");
+            String status = req.getParameter("status");
+            Account account = new Account(accountID, fullName, email, phone, password, Integer.parseInt(status));
 
+            if (accountServices.insertAccount(account)) {
+                resp.sendRedirect("dashboard.jsp");
+            } else {
+                req.setAttribute("error", "Insert account failed!!");
+                req.getRequestDispatcher("addAccount.jsp").forward(req, resp);
+            }
         }
     }
 }

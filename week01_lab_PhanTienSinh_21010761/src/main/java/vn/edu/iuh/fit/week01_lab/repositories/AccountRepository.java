@@ -42,8 +42,8 @@ public class AccountRepository {
         }
     }
 
-    public Account findAll(){
-        return em.createNamedQuery("Account.findAll", Account.class).getSingleResult();
+    public List<Account> findAll(){
+        return em.createNamedQuery("Account.findAll", Account.class).getResultList();
     }
 
     public Account findAccountById(String id) {
