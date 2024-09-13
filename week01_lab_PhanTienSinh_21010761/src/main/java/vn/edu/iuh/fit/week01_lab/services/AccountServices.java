@@ -28,6 +28,14 @@ public class AccountServices {
         }
     }
 
+    public boolean updateAccount(Account account) {
+        if (checkExistsAccount(account)) {
+            return accountRepository.updateAccount(account);
+        } else {
+            return false;
+        }
+    }
+
     public Account getInforAccount(String account_id) {
         return accountRepository.findAccountById(account_id);
     }

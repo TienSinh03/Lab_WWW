@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import vn.edu.iuh.fit.week01_lab.entities.Account;
 import vn.edu.iuh.fit.week01_lab.entities.Role;
 import vn.edu.iuh.fit.week01_lab.services.AccountServices;
@@ -25,8 +26,17 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
+        HttpSession session = req.getSession(true);
        if (action.equalsIgnoreCase("add")) {
-            req.getRequestDispatcher("addAccount.jsp").forward(req, resp);
+           session.setAttribute("account", new Account());
+            req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
+
+       } else if (action.equalsIgnoreCase("edit")) {
+           String account_id = req.getParameter("id");
+
+           Account account = accountServices.getInforAccount(account_id);
+           session.setAttribute("account", account);
+           req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
        }
     }
 
@@ -70,13 +80,28 @@ public class ControllerServlet extends HttpServlet {
             String phone = req.getParameter("phone");
             String password = req.getParameter("password");
             String status = req.getParameter("status");
-            Account account = new Account(accountID, fullName, email, phone, password, Integer.parseInt(status));
+            Account account = new Account(accountID, fullName, password, email, phone, Integer.parseInt(status));
 
             if (accountServices.insertAccount(account)) {
                 resp.sendRedirect("dashboard.jsp");
             } else {
                 req.setAttribute("error", "Insert account failed!!");
-                req.getRequestDispatcher("addAccount.jsp").forward(req, resp);
+                req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
+            }
+        } else if(action.equalsIgnoreCase("edit")) {
+            String accountID = req.getParameter("account_id");
+            String fullName = req.getParameter("full_name");
+            String email = req.getParameter("email");
+            String phone = req.getParameter("phone");
+            String password = req.getParameter("password");
+            String status = req.getParameter("status");
+            Account account = new Account(accountID, fullName, password, email, phone, Integer.parseInt(status));
+
+            if (accountServices.updateAccount(account)) {
+                resp.sendRedirect("dashboard.jsp");
+            } else {
+                req.setAttribute("error", "Update account failed!!");
+                req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
             }
         }
     }
