@@ -61,13 +61,22 @@ public class ControllerServlet extends HttpServlet {
            }
            // implement session set attribute accounts to dashboard.jsp
            session.setAttribute("accounts", accounts);
-              req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
        } else if(action.equals("logout")) {
               Log log = (Log) session.getAttribute("log");
               log.setLogoutTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
               accountServices.writeLog(log);
-                session.invalidate();
+              session.invalidate();
               req.getRequestDispatcher("login.jsp").forward(req, resp);
+       } else if(action.equals("grantAccess")) {
+           String account_id = req.getParameter("id");
+           String role_id = "admin";
+           if (accountServices.setAccessByAcc(account_id, role_id)) {
+               resp.sendRedirect("dashboard.jsp");
+           } else {
+               req.setAttribute("error", "Grant access failed!!");
+               req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+           }
        }
     }
 
@@ -81,13 +90,14 @@ public class ControllerServlet extends HttpServlet {
             String account_id = req.getParameter("account_id");
             String password = req.getParameter("password");
             Role role = roleServices.getRoleByIdAccount(account_id);
+            System.out.println(role);
             boolean result = accountServices.verifyAccount(account_id, password);
             if (result) {
                 Log log = new Log();
                 if(role.getRole_id().equals("admin")){
                     // set log
                     log.setAccountId(account_id);
-                    log.setNotes("login");
+                    log.setNotes("Admin login");
                     log.setLoginTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
                     HttpSession session = req.getSession();
                     session.setAttribute("log", log);
@@ -96,7 +106,7 @@ public class ControllerServlet extends HttpServlet {
                     req.getServletContext().setAttribute("account", accountServices.getInforAccount(account_id));
                     req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
                     resp.sendRedirect("dashboard.jsp");
-                } else {
+                } else if(role.getRole_id().equals("user")) {
                     Account account = accountServices.getInforAccount(account_id);
                     String html = "<html><head><title>Account Information</title></head><body >" +
                             "<a href='controller-servlet?action=logout'>Log out</a >" +
@@ -115,9 +125,11 @@ public class ControllerServlet extends HttpServlet {
                     log.setLoginTime(Instant.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant());
                     HttpSession session = req.getSession();
                     session.setAttribute("log", log);
+                } else if(role == null) {
+                    req.setAttribute("error", "Role doesn't set for this account!!");
+                    req.getRequestDispatcher("login.jsp").forward(req, resp);
+                    resp.sendRedirect("login.jsp");
                 }
-
-
             } else {
                 req.setAttribute("error", "Login failed!!");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
@@ -134,7 +146,13 @@ public class ControllerServlet extends HttpServlet {
             Account account = new Account(accountID, fullName, password, email, phone, Integer.parseInt(status));
 
             if (accountServices.insertAccount(account)) {
-                resp.sendRedirect("dashboard.jsp");
+                String role_id = "user";
+                if (accountServices.setAccessByAcc(accountID, role_id)) {
+                    resp.sendRedirect("dashboard.jsp");
+                } else {
+                    req.setAttribute("error", "Grant access failed!!");
+                    req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+                }
             } else {
                 req.setAttribute("error", "Insert account failed!!");
                 req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
@@ -146,10 +164,17 @@ public class ControllerServlet extends HttpServlet {
             String phone = req.getParameter("phone");
             String password = req.getParameter("password");
             String status = req.getParameter("status");
+            String role = req.getParameter("role_id");
+            System.out.println(role);
             Account account = new Account(accountID, fullName, password, email, phone, Integer.parseInt(status));
 
             if (accountServices.updateAccount(account)) {
-                resp.sendRedirect("dashboard.jsp");
+                if(accountServices.editRoleByAcc(accountID, role)) {
+                    resp.sendRedirect("dashboard.jsp");
+                } else {
+                    req.setAttribute("error", "Update role failed!!");
+                    req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
+                }
             } else {
                 req.setAttribute("error", "Update account failed!!");
                 req.getRequestDispatcher("formAccount.jsp").forward(req, resp);

@@ -11,7 +11,8 @@ import lombok.*;
 @Entity
 @Table(name = "grant_access")
 @NamedQueries({
-        @NamedQuery(name = "GrantAccess.updateIs_grantBy", query = "update GrantAccess g set g.is_grant = :is_grant")
+        @NamedQuery(name = "GrantAccess.updateIs_grantBy", query = "update GrantAccess g set g.is_grant = :is_grant"),
+        @NamedQuery(name = "GrantAccess.exists", query = "select (count(g)>0) from GrantAccess g where g.role.role_id = :role_id and g.account.account_id = :account_id"),
 })
 public class GrantAccess {
 

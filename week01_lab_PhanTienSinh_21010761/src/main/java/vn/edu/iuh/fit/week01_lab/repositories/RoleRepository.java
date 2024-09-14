@@ -35,4 +35,8 @@ public class RoleRepository {
             return null;
         }
     }
+
+    public Role getRoleById(String roleId) {
+        return em.find(Role.class, roleId);
+    }
 }

@@ -87,6 +87,7 @@
                 </td>
                 <td><a href="controller-servlet?action=edit&id=<%=acc.getAccount_id()%>">Edit</a></td>
                 <td><a href="controller-servlet?action=delete&id=<%=acc.getAccount_id()%>">Delete</a></td>
+                <td><a href="controller-servlet?action=grantAccess&id=<%=acc.getAccount_id()%>">Set Access</a></td>
             </tr>
             <%
                 }
