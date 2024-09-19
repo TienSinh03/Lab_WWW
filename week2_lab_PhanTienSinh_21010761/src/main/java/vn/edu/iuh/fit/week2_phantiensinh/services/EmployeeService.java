@@ -7,6 +7,7 @@
 package vn.edu.iuh.fit.week2_phantiensinh.services;
 
 import jakarta.inject.Inject;
+import vn.edu.iuh.fit.week2_phantiensinh.enums.EmployeeStatus;
 import vn.edu.iuh.fit.week2_phantiensinh.models.Employee;
 import vn.edu.iuh.fit.week2_phantiensinh.repositories.EmployRepository;
 import vn.edu.iuh.fit.week2_phantiensinh.repositories.impl.EmployeeRepoImpl;
@@ -34,7 +35,12 @@ public class EmployeeService {
     }
 
     public boolean deleteEmploy(long id) {
-        return employRepository.deleteEmploy(id);
+        Employee employee = employRepository.findById(id);
+        if (employee != null) {
+            employee.setStatus(EmployeeStatus.TERMINATED);
+            return employRepository.updateEmploy(employee);
+        }
+        return false;
     }
 
     public boolean exists(long id) {
@@ -43,5 +49,9 @@ public class EmployeeService {
 
     public List<Employee> findAll() {
         return employRepository.findAll();
+    }
+
+    public Employee findById(long l) {
+        return employRepository.findById(l);
     }
 }

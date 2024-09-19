@@ -24,6 +24,7 @@
 
 <div class="container">
     <h1 class="text-center mb-2">Employee List</h1>
+    <a href="Home.jsp" class="btn btn-secondary mb-2">Back to Home</a>
     <table class="table table-striped">
         <tr>
             <th>Id</th>

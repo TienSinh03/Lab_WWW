@@ -29,7 +29,6 @@ import java.util.List;
 @Table(name = "employee")
 @NamedQueries({
         @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
-        @NamedQuery(name = "Employee.delete", query = "Update Employee e set e.status = -1 where e.id = :id"),
         @NamedQuery(name = "Employee.existsById", query = "select (count(e) > 0) from Employee e where e.id = :id")
 })
 public class Employee {
@@ -63,6 +62,15 @@ public class Employee {
 
     public Employee(long id, LocalDateTime dob, String email, String address, EmployeeStatus status, String phone, String fullName) {
         this.id = id;
+        this.dob = dob;
+        this.email = email;
+        this.address = address;
+        this.status = status;
+        this.phone = phone;
+        this.fullName = fullName;
+    }
+
+    public Employee(LocalDateTime dob, String email, String address, EmployeeStatus status, String phone, String fullName) {
         this.dob = dob;
         this.email = email;
         this.address = address;

@@ -59,17 +59,7 @@ public class EmployeeRepoImpl implements EmployRepository {
     @Override
     public boolean deleteEmploy(long id) {
 
-        try {
-            et.begin();
-            em.createNamedQuery("Employee.delete", Employee.class)
-                    .setParameter("id", id)
-                    .executeUpdate();
-            et.commit();
-            return true;
-        } catch (Exception e) {
-            et.rollback();
-            e.printStackTrace();
-        }
+
         return false;
     }
 
@@ -88,5 +78,10 @@ public class EmployeeRepoImpl implements EmployRepository {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Employee findById(long l) {
+        return em.find(Employee.class, l);
     }
 }

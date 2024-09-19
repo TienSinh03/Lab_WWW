@@ -21,4 +21,5 @@ public interface EmployRepository {
     public boolean deleteEmploy(long id);
     public boolean exists(long id);
     public List<Employee> findAll();
+    public Employee findById(long l);
 }

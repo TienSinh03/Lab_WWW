@@ -33,7 +33,7 @@ public class ControllerServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
        if (action.equalsIgnoreCase("add")) {
            session.setAttribute("account", new Account());
-            req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
+           req.getRequestDispatcher("formAccount.jsp").forward(req, resp);
 
        } else if (action.equalsIgnoreCase("edit")) {
            String account_id = req.getParameter("id");

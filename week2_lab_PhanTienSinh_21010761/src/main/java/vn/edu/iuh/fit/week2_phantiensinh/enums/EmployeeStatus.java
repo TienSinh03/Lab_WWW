@@ -21,4 +21,18 @@ public enum EmployeeStatus {
     public int getValue(){
         return value;
     }
+
+    /**
+     * Convert int value to enum
+     * @param value
+     * @return
+     */
+    public static EmployeeStatus convertEnum(int value) {
+        for (EmployeeStatus status : EmployeeStatus.values()) {
+            if (status.getValue() == value) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for value: " + value);
+    }
 }
