@@ -8,9 +8,8 @@ package vn.edu.iuh.fit.week2_phantiensinh.models;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import vn.edu.iuh.fit.week2_phantiensinh.converters.EmployeeStatusConverter;
 import vn.edu.iuh.fit.week2_phantiensinh.enums.EmployeeStatus;
 
 import java.time.LocalDateTime;
@@ -24,8 +23,15 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "employee")
+@NamedQueries({
+        @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+        @NamedQuery(name = "Employee.delete", query = "Update Employee e set e.status = -1 where e.id = :id"),
+        @NamedQuery(name = "Employee.existsById", query = "select (count(e) > 0) from Employee e where e.id = :id")
+})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +47,8 @@ public class Employee {
     @Column(length = 250, nullable = false)
     private String address;
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
+    @Convert(converter = EmployeeStatusConverter.class)
     private EmployeeStatus status;
 
     @Column(length = 15, nullable = false)

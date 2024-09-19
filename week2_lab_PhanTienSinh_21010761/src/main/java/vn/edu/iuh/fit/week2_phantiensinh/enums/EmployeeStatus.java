@@ -12,7 +12,7 @@ package vn.edu.iuh.fit.week2_phantiensinh.enums;
  * @date: 9/18/2024
  */
 public enum EmployeeStatus {
-    TERMINATED(-1),  ACTIVE(0),IN_ACTIVE(1);
+    ACTIVE(1), IN_ACTIVE(0),TERMINATED(-1) ;
     private int value;
 
     EmployeeStatus(int value) {
