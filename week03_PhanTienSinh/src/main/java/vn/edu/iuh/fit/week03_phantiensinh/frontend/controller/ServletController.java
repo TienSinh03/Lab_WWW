@@ -43,7 +43,7 @@ public class ServletController extends HttpServlet {
 
             Product product = new Product(name, description, img_path);
             productModel.createProduct(product);
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("formProduct.jsp");
         }
     }
 }

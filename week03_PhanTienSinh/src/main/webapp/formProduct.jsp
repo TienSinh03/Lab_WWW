@@ -19,5 +19,6 @@
     <input type="submit" value="Submit">
     <input type="reset" value="Rest">
 </form>
+<a href="ProductList.jsp">productList</a>
 </body>
 </html>

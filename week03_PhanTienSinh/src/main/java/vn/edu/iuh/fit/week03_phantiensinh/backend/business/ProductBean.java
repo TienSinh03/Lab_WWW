@@ -35,6 +35,16 @@ public class ProductBean implements ProductBeanRemote{
     }
 
     @Override
+    public void update(Product product) {
+        entityManager.merge(product);
+    }
+
+    @Override
+    public void delete(Product product) {
+
+    }
+
+    @Override
     public List<Product> getAll() {
         return entityManager.createNamedQuery("Product.findAll", Product.class).getResultList();
     }

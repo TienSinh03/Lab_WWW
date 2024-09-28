@@ -43,4 +43,13 @@ public class ProductResource {
         productBean.add(product);
         return Response.ok(product).build();
     }
+
+//    @POST
+//    @Consumes("application/json")
+//    @Produces("application/json")
+//    @Transactional
+//    public Response update(Product product) {
+//        productBean.update(product);
+//        return Response.ok(product).build();
+//    }
 }

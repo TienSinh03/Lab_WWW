@@ -19,6 +19,8 @@ import java.util.List;
 @Remote
 public interface ProductBeanRemote {
     void add (Product product);
+    void update (Product product);
+    void delete (Product product);
    List<Product> getAll();
     Product getById(int id);
 
