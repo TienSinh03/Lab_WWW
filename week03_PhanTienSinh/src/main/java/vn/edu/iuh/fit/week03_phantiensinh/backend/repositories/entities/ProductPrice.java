@@ -5,23 +5,22 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_price", schema = "productdb")
+@NamedQueries({
+        @NamedQuery(name = "ProductPrice.findByProducts_Id", query = "select p from ProductPrice p join p.products products where products.id = :id")
+})
 public class ProductPrice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "price_id", nullable = false)
+
     private Integer id;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "price_id", nullable = false)
-    private Product product;
 
-    @NotNull
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
 
     @NotNull
     @Column(name = "apply_date", nullable = false)
@@ -35,7 +34,16 @@ public class ProductPrice implements Serializable {
     @Column(name = "note")
     private String note;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Product> products = new LinkedHashSet<>();
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 
     public Integer getId() {
         return id;
@@ -43,22 +51,6 @@ public class ProductPrice implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
     }
 
     public Instant getApplyDate() {

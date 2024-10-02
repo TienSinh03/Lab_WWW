@@ -26,13 +26,13 @@ public class ProductResource {
     @GET
     @Produces("application/json")
     public Response getAll() {
-        return Response.ok(productBean.getAll()).build();
+        return Response.ok(productBean.getAllDTO()).build();
     }
 
     @GET
     @Path("/{id}")
     public Response getById(@PathParam("id") int id) {
-        return Response.ok(productBean.getById(id)).build();
+        return Response.ok(productBean.getById_DTO(id)).build();
     }
 
     @POST

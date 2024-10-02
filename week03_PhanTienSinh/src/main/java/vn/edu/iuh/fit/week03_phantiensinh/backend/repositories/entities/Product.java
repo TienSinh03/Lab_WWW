@@ -27,8 +27,12 @@ public class Product implements Serializable {
     @Column(name = "img_path", length = 250)
     private String imgPath;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "price_id")
+//    private ProductPriceRepository price;
+
 //    @OneToOne(mappedBy = "product")
-//    private ProductPrice productPrice;
+//    private ProductPriceRepository productPrice;
 
     public Product() {
     }

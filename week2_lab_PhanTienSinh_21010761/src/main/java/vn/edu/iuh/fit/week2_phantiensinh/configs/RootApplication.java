@@ -15,5 +15,5 @@ import jakarta.ws.rs.core.Application;
  * @date: 9/19/2024
  */
 @ApplicationPath("/api")
-public class RootApplication extends Application {
+public class RootApplication extends Application{
 }
