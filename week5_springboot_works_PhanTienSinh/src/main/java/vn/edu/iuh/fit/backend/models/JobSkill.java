@@ -3,6 +3,8 @@ package vn.edu.iuh.fit.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import vn.edu.iuh.fit.backend.enums.SkillLevel;
+import vn.edu.iuh.fit.backend.ids.JobSkillId;
 
 @Getter
 @Setter
@@ -21,6 +23,7 @@ public class JobSkill {
     private String moreInfos;
 
     @Column(name = "skill_level", nullable = false)
-    private Byte skillLevel;
+    @Enumerated(EnumType.STRING)
+    private SkillLevel skillLevel;
 
 }
