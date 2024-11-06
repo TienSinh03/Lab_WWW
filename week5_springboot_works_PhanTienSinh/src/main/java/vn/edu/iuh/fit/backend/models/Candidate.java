@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class Candidate {
     private Long id;
 
     @Column(name = "dob", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     @Column(name = "email", nullable = false)
@@ -51,5 +53,17 @@ public Candidate() {
         this.address = address;
         this.phone = phone;
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id=" + id +
+                ", dob=" + dob +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

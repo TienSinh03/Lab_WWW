@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.backend.models.Address;
 import vn.edu.iuh.fit.backend.models.Candidate;
@@ -58,7 +55,7 @@ public class CandidateController {
     }
 
     @GetMapping("candidates/form-add-candidate")
-    public ModelAndView showFromAddCandidate(Model model) {
+    public ModelAndView showFormAddCandidate(Model model) {
         ModelAndView mav = new ModelAndView("candidates/add-candidate");
         Candidate candidate = new Candidate();
         candidate.setAddress(new Address());
@@ -70,6 +67,27 @@ public class CandidateController {
 
     @PostMapping("candidates/add")
     public String addCandidate(@ModelAttribute("candidate") Candidate candidate
+            , @ModelAttribute("address") Address address) {
+        addressRepository.save(address);
+        candidate.setAddress(address);
+        candidateRepository.save(candidate);
+        return "redirect:/candidates";
+    }
+
+    @GetMapping("candidates/form-update-candidate/{id}")
+    public ModelAndView showFormEditCandidate(Model model, @PathVariable("id") Long id) {
+        ModelAndView mav = new ModelAndView("candidates/update-candidates");
+        Optional<Candidate> candidate = candidateRepository.findById(id);
+        if(candidate.isPresent()) {
+            mav.addObject("candidate", candidate.get());
+            mav.addObject("address", candidate.get().getAddress());
+            mav.addObject("countries", CountryCode.values());
+        }
+        return mav;
+    }
+
+    @PostMapping("candidates/edit")
+    public String editCandidate(@ModelAttribute("candidate") Candidate candidate
             , @ModelAttribute("address") Address address) {
         addressRepository.save(address);
         candidate.setAddress(address);

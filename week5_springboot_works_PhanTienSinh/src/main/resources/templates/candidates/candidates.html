@@ -41,7 +41,7 @@
                     <td th:text="${candidate.email}"></td>
                     <td>
                     <!--  dạng http://localhost:8080/list/edit/<số id>                      -->
-                        <a th:href="@{/edit/{id} (id=${candidate.id})}" class="btn btn-primary me-3">Edit</a>
+                        <a th:href="@{/candidates/form-update-candidate/{id} (id=${candidate.id})}" class="btn btn-primary me-3">Edit</a>
                         <a th:href="@{/delete/{id} (id=${candidate.id})}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>

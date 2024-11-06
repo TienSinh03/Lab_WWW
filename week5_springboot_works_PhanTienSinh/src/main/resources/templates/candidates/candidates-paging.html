@@ -46,6 +46,10 @@ C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         <td th:text="${candidate.address}"></td>
         <td th:text="${candidate.phone}"></td>
         <td th:text="${candidate.email}"></td>
+        <td>
+            <a th:href="@{/candidates/form-update-candidate/{id} (id=${candidate.id})}" class="btn btn-outline-primary me-3">Edit</a>
+            <a th:href="@{/candidates/delete/{id} (id=${candidate.id})}" class="btn btn-outline-danger me-3">Delete</a>
+        </td>
 
     </tr>
     </tbody>
