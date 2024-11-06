@@ -94,4 +94,11 @@ public class CandidateController {
         candidateRepository.save(candidate);
         return "redirect:/candidates";
     }
+
+    @GetMapping("candidates/delete/{id}")
+    public String deleteCandidate(@PathVariable("id") Long id) {
+        Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid candidate Id:" + id));
+        candidateRepository.delete(candidate);
+        return "redirect:/candidates";
+    }
 }
