@@ -16,7 +16,9 @@ import vn.edu.iuh.fit.backend.services.CandidateSkillService;
 import vn.edu.iuh.fit.backend.services.ExperienceService;
 import vn.edu.iuh.fit.backend.services.SkillService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -71,45 +73,49 @@ public class CandidateController {
     public ModelAndView showFormAddCandidate(Model model) {
         ModelAndView mav = new ModelAndView("candidates/add-candidate");
         Candidate candidate = new Candidate();
-        CandidateSkill candidateSkill = new CandidateSkill();
+        candidate.setCandidateSkills(new ArrayList<>());
+        List<CandidateSkill> candidateSkills = new ArrayList<CandidateSkill>();
         Experience experience = new Experience();
         candidate.setAddress(new Address());
         mav.addObject("candidate", candidate);
         mav.addObject("address", candidate.getAddress());
         mav.addObject("countries", CountryCode.values());
-        mav.addObject("candidateSkill", candidateSkill);
         mav.addObject("skills", skillService.getAllSkills());
         mav.addObject("experience", experience);
         return mav;
     }
 
-    @PostMapping("add")
-    public String addCandidate(@ModelAttribute("candidate") Candidate candidate
-            , @ModelAttribute("address") Address address
-            , @ModelAttribute("candidateSkill") CandidateSkill candidateSkill
-            , @ModelAttribute("experience") Experience experience
-            , @RequestParam("skillId") Long skillId
-            , @RequestParam("skillLevel") SkillLevel skillLevel
-            ,@ModelAttribute("experience") Experience experiences) {
-
-        System.out.println("Candidate ID: " + candidate.getId());
+    @PostMapping("/add")
+    public String addCandidate(@ModelAttribute("candidate") Candidate candidate,
+                               @ModelAttribute("address") Address address,
+                               @ModelAttribute("experience") Experience experience) {
+        // Khởi tạo danh sách nếu candidateSkills là null
+        if (candidate.getCandidateSkills() == null) {
+            candidate.setCandidateSkills(new ArrayList<>());
+        }
+        candidate.getCandidateSkills().removeIf(Objects::isNull);
 
         addressRepository.save(address);
         candidate.setAddress(address);
         candidateRepository.save(candidate);
 
         Candidate canbyEmail = candidateRepository.findByEmail(candidate.getEmail());
-        System.out.println("Candidate ID: " + canbyEmail.getId());
-        Skill skill = skillService.getSkillById(skillId).get();
-        candidateSkill.setSkill(skill);
-        candidateSkill.setCandidate(canbyEmail);
-        candidateSkill.setSkillLevel(skillLevel);
-        candidateSkillService.save(candidateSkill);
+
+        // Lưu từng CandidateSkill
+        for (CandidateSkill candidateSkill : candidate.getCandidateSkills()) {
+            if (candidateSkill.getSkill() != null && candidateSkill.getSkillLevel() != null) { // Kiểm tra null trước khi lưu
+                candidateSkill.setCandidate(canbyEmail);
+                candidateSkillService.save(candidateSkill);
+            }
+        }
 
         experience.setCandidate(canbyEmail);
         experienceService.save(experience);
+
         return "redirect:/candidates/list_paging";
     }
+
+
 
     @GetMapping("form-update-candidate/{id}")
     public ModelAndView showFormEditCandidate(Model model, @PathVariable("id") Long id) {

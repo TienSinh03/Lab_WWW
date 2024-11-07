@@ -5,6 +5,8 @@ import lombok.*;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
 import vn.edu.iuh.fit.backend.ids.JobSkillId;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
@@ -13,7 +15,7 @@ import vn.edu.iuh.fit.backend.ids.JobSkillId;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "job_skill")
-public class JobSkill {
+public class JobSkill implements Serializable {
     @EmbeddedId
     private JobSkillId id;
 

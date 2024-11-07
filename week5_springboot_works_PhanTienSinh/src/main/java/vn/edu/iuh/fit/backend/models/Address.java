@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import vn.edu.iuh.fit.backend.converters.CountryCodeConverter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

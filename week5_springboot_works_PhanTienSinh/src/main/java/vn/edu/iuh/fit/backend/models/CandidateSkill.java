@@ -7,6 +7,7 @@ import vn.edu.iuh.fit.backend.converters.SkillLevelConverter;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
 import vn.edu.iuh.fit.backend.ids.CandidateSkillId;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -17,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @IdClass(CandidateSkillId.class)
-public class CandidateSkill {
+public class CandidateSkill implements Serializable {
 
     @Id
     @ManyToOne

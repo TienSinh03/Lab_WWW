@@ -1,33 +1,126 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"-->
+<!--            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"-->
+<!--            crossorigin="anonymous"></script>-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container py-5">-->
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="col-md-8">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header">-->
+<!--                    <h1 class="text-center">HOME</h1>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <p class="text-center">Spring Boot + Thymeleaf + Bootstrap 5</p>-->
+<!--                    <div class="d-grid gap-2">-->
+<!--                        <a th:href="@{/candidates/list_paging}" class="btn btn-primary">Candidates</a>-->
+<!--                        <a th:href="@{/}" class="btn btn-primary">Job</a>-->
+<!--                        <a th:href="@{/}" class="btn btn-primary">Company</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Data with Modal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Modal custom styles */
+        .modal-content {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="text-center">HOME</h1>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">Spring Boot + Thymeleaf + Bootstrap 5</p>
-                    <div class="d-grid gap-2">
-                        <a th:href="@{/candidates/list_paging}" class="btn btn-primary">Candidates</a>
-                        <a th:href="@{/}" class="btn btn-primary">Job</a>
-                        <a th:href="@{/}" class="btn btn-primary">Company</a>
-                    </div>
-                </div>
+
+<!-- Table Data -->
+<div class="container my-5">
+    <table class="table table-bordered" id="data-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Nguyễn Văn A</td>
+            <td>a.nguyen@example.com</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Trần Thị B</td>
+            <td>b.tran@example.com</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Lê Văn C</td>
+            <td>c.le@example.com</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="dataModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>ID:</strong> <span id="modal-id"></span></p>
+                <p><strong>Name:</strong> <span id="modal-name"></span></p>
+                <p><strong>Email:</strong> <span id="modal-email"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // JavaScript to handle row click and show modal
+    const rows = document.querySelectorAll('#data-table tbody tr');
+
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            // Lấy dữ liệu từ row
+            const id = this.cells[0].innerText;
+            const name = this.cells[1].innerText;
+            const email = this.cells[2].innerText;
+
+            // Hiển thị dữ liệu vào modal
+            document.getElementById('modal-id').innerText = id;
+            document.getElementById('modal-name').innerText = name;
+            document.getElementById('modal-email').innerText = email;
+
+            // Mở modal
+            const modal = new bootstrap.Modal(document.getElementById('dataModal'));
+            modal.show();
+        });
+    });
+</script>
+
 </body>
 </html>

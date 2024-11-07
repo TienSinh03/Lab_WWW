@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import vn.edu.iuh.fit.backend.enums.SkillType;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
@@ -11,7 +13,7 @@ import vn.edu.iuh.fit.backend.enums.SkillType;
 @Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "skill")
-public class Skill {
+public class Skill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id", nullable = false)

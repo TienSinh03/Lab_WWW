@@ -64,23 +64,26 @@
         </div>
         <br/>
 
-        <div class="row" aria-label="Skill">
-            <h3 class="col-sm-1 mt-3">Skill</h3>
-            <div class="row mb-3">
-                <label for="skillId" class="col-sm-1 col-form-label">Skill Name</label>
-                    <select class="form-select col-sm-5" id="skillId" name="skillId">
-                        <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.skillName}"></option>
+        <div class="row mt-4" aria-label="Skill">
+            <h3 class="col-12 mb-3">Skill</h3>
+            <div class="d-flex flex-wrap gap-3" th:each="skill, indexStat : ${skills}">
+                <div class="form-check" style="width: 25%">
+                    <!-- Đặt tên input để liên kết với candidate.candidateSkills -->
+                    <input class="form-check-input" type="checkbox" th:field="*{candidateSkills[__${indexStat.index}__].skill}" th:value="${skill.id}">
+                    <label class="form-check-label" th:for="skillId" th:text="${skill.skillName}"></label>
+                </div>
+                <div>
+                    <select class="form-select" th:field="*{candidateSkills[__${indexStat.index}__].skillLevel}">
+                        <option th:each="type : ${T(vn.edu.iuh.fit.backend.enums.SkillLevel).values()}"
+                                th:value="${type}"
+                                th:text="${type}"></option>
                     </select>
-            </div>
-            <div class="row mb-3">
-                <label for="skillType" class="col-sm-1 col-form-label">Skill Level</label>
-                <select class="form-select col-sm-5" id="skillType" name="skillLevel">
-                    <option th:each="type : ${T(vn.edu.iuh.fit.backend.enums.SkillLevel).values()}"
-                            th:value="${type}"
-                            th:text="${type}"></option>
-                </select>
+                </div>
             </div>
         </div>
+
+
+
 
         <div class="row" aria-label="Experience">
             <h3 class="col-sm-1 mt-3">Experience</h3>
