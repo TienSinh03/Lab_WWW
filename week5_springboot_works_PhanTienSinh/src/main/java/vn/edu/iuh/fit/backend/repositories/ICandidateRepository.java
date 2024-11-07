@@ -19,4 +19,6 @@ import vn.edu.iuh.fit.backend.models.Company;
  */
 @Repository
 public interface ICandidateRepository extends JpaRepository<Candidate, Long> {
+
+    public Candidate findByEmail(String email);
 }

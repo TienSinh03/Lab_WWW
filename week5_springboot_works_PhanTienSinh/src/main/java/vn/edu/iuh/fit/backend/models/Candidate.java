@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +34,12 @@ public class Candidate {
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
+
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    private List<Experience> experiences;
+
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    private List<CandidateSkill> candidateSkills;
 
 
 public Candidate() {

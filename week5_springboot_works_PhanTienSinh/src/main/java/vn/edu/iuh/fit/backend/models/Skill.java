@@ -1,13 +1,15 @@
 package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import vn.edu.iuh.fit.backend.enums.SkillType;
 
 @Getter
 @Setter
 @Entity
+@ToString
+@Builder
+@NoArgsConstructor @AllArgsConstructor
 @Table(name = "skill")
 public class Skill {
     @Id
@@ -24,5 +26,7 @@ public class Skill {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private SkillType type;
+
+
 
 }

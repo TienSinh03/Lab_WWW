@@ -21,15 +21,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 
-@Service
-public class CandidateServices {
 
-    @Autowired
-    private ICandidateRepository candidateRepository;
-
-    public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        return candidateRepository.findAll(pageable);
-    }
+public interface CandidateServices {
+    public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection);
+    public Candidate getByEmail(String email);
 }

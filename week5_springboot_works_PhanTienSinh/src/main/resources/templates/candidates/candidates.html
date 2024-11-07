@@ -17,6 +17,7 @@
 <body>
 <div th:switch="${candidates}">
     <h2 th:case="null" class="text-center">No candidates yet!</h2>
+    <a th:href="@{/candidates/form-add-candidate}" class="btn btn-outline-warning mb-3"></a>
     <div th:case="*">
         <h1 class="text-center">Candidates</h1>
         <table class="table table-hover">

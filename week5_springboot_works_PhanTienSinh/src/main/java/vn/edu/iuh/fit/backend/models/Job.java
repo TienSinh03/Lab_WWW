@@ -1,12 +1,17 @@
 package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "job")
 public class Job {
     @Id
@@ -22,6 +27,11 @@ public class Job {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company")
+    @ToString.Exclude
     private Company company;
+
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<JobSkill> applications;
 
 }

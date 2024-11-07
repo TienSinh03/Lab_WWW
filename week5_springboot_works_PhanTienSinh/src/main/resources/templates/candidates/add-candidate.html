@@ -63,10 +63,65 @@
             </div>
         </div>
         <br/>
+
+        <div class="row" aria-label="Skill">
+            <h3 class="col-sm-1 mt-3">Skill</h3>
+            <div class="row mb-3">
+                <label for="skillId" class="col-sm-1 col-form-label">Skill Name</label>
+                    <select class="form-select col-sm-5" id="skillId" name="skillId">
+                        <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.skillName}"></option>
+                    </select>
+            </div>
+            <div class="row mb-3">
+                <label for="skillType" class="col-sm-1 col-form-label">Skill Level</label>
+                <select class="form-select col-sm-5" id="skillType" name="skillLevel">
+                    <option th:each="type : ${T(vn.edu.iuh.fit.backend.enums.SkillLevel).values()}"
+                            th:value="${type}"
+                            th:text="${type}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" aria-label="Experience">
+            <h3 class="col-sm-1 mt-3">Experience</h3>
+            <div class="row mb-3">
+                <label for="company" class="col-sm-1 col-form-label">Company</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="company" th:field="${experience.companyName}">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="from-date" class="col-sm-1 col-form-label">From Date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="from-date" th:field="${experience.fromDate}">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="to-date" class="col-sm-1 col-form-label">To Date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="to-date" th:field="${experience.toDate}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="role" class="col-sm-1 col-form-label">Role</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="role" th:field="${experience.role}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="work-desc" class="col-sm-1 col-form-label">Work description</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="work-desc" th:field="${experience.workDescription}">
+                </div>
+            </div>
+        </div>
+
+
         <div class="d-flex gap-3 col-2 mx-auto">
             <input class="btn btn-primary me-3" type="submit" value="Add Candidate">
-            <a th:href="@{/candidates}" class="btn btn-outline-secondary"> Cancel</a>
-
+            <a th:href="@{/candidates/list_paging}" class="btn btn-outline-secondary"> Cancel</a>
         </div>
     </form>
 </div>

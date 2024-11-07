@@ -33,6 +33,7 @@ C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 </head>
 <body>
 <h1 class="text-center">LIST CANDIDATES</h1>
+<a th:href="@{/candidates/form-add-candidate}" class="btn btn-outline-warning mb-3">Add new a candidate</a>
 <table class="table table-hover">
     <thead></thead>
     <tbody>
@@ -60,7 +61,7 @@ C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 <div class="inline" th:if="${candidatePage.getTotalPages() > 0}" th:each="pageNumber : ${pageNumbers}">
 
 <!--  Có dạng http://localhost:8080/candidates?size=10&page=2  -->
-    <a th:href = "@{/candidates(size=${candidatePage.size}, page=${pageNumber})}"
+    <a th:href = "@{/candidates/list_paging(size=${candidatePage.size}, page=${pageNumber})}"
         th:text="${pageNumber}"
        th:class="${pageNumber == candidatePage.number + 1} ? active"
     ></a>
