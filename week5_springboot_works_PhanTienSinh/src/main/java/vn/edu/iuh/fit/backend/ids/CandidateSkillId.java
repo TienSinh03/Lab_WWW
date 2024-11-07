@@ -1,15 +1,9 @@
 package vn.edu.iuh.fit.backend.ids;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.Hibernate;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.models.Skill;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 
 public class CandidateSkillId implements Serializable {

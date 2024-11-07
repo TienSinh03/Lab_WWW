@@ -21,8 +21,13 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 
+import java.util.List;
+
 
 public interface CandidateServices {
     public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection);
+    public List<Candidate> findAllNoPaging();
     public Candidate getByEmail(String email);
+
+    public Candidate getCandidate(Long id);
 }

@@ -16,6 +16,8 @@ import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
 
+import java.util.List;
+
 /*
  * @description:
  * @author: Sinh Phan Tien
@@ -34,7 +36,17 @@ public class CandidateServicesImpl implements CandidateServices {
     }
 
     @Override
+    public List<Candidate> findAllNoPaging() {
+        return candidateRepository.findAll();
+    }
+
+    @Override
     public Candidate getByEmail(String email) {
         return candidateRepository.findByEmail(email);
+    }
+
+    @Override
+    public Candidate getCandidate(Long id) {
+        return candidateRepository.findById(id).get();
     }
 }

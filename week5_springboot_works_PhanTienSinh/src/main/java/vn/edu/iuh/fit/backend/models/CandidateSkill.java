@@ -1,5 +1,9 @@
 package vn.edu.iuh.fit.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -15,25 +19,30 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @IdClass(CandidateSkillId.class)
 public class CandidateSkill implements Serializable {
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "skill_id")
+    @JsonProperty("skill")
     private Skill skill;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "can_id")
+    @JsonIgnore
     private Candidate candidate;
 
     @Column(name = "skill_level", nullable = false)
     @Convert(converter = SkillLevelConverter.class)
+    @JsonProperty("skill_level")
     private SkillLevel skillLevel;
+
     @Column(name = "more_infos", length = 1000)
+    @JsonProperty("more_infos")
     private String moreInfo;
 
     @Override

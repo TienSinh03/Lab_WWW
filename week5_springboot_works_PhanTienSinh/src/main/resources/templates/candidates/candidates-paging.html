@@ -78,9 +78,11 @@
                 <p><strong>Phone:</strong> <span id="modalCandidatePhone"></span></p>
                 <p><strong>Email:</strong> <span id="modalCandidateEmail"></span></p>
                 <h4>Skill</h4>
+                <ul id="modalCandidateSkill"></ul>
 
+                <br/>
                 <h4>Experience</h4>
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" >
                     <thead>
                     <tr>
                         <th>Role</th>
@@ -90,7 +92,7 @@
                         <th>Description</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="modalCandidateExperience">
 
                     </tbody>
                 </table>
@@ -107,29 +109,47 @@
 
     const rows = document.querySelectorAll('#data-table tbody tr');
 
-    rows.forEach(row => {
-        row.addEventListener('click', function() {
-            const candidateId = this.cells[0].innerText;
-            const candidateFullName = this.cells[1].innerText;
-            const candidateDOB = this.cells[2].innerText;
-            const candidateAddress = this.cells[3].innerText;
-            const candidatePhone = this.cells[4].innerText;
-            const candidateEmail = this.cells[5].innerText;
 
-            document.getElementById('modalCandidateId').innerText = candidateId;
-            document.getElementById('modalCandidateFullName').innerText = candidateFullName;
-            document.getElementById('modalCandidateDOB').innerText = candidateDOB;
-            document.getElementById('modalCandidateAddress').innerText = candidateAddress;
-            document.getElementById('modalCandidatePhone').innerText = candidatePhone;
-            document.getElementById('modalCandidateEmail').innerText = candidateEmail;
+    rows.forEach(row => {
+        row.addEventListener('click', async function () {
+            const candidateId = this.cells[0].innerText;
+
+            const response = await fetch(`http://localhost:8080/api/candidates/${candidateId}`);
+            const data = await response.json();
+
+            document.getElementById('modalCandidateId').innerText = data.id;
+            document.getElementById('modalCandidateFullName').innerText = data.fullName;
+            document.getElementById('modalCandidateDOB').innerText = data.dob;
+            document.getElementById('modalCandidateAddress').innerText ='Number '+data.address.number+', '+ data.address.street + ' street, '+ data.address.city+ ' city, '+ data.address.zipcode+ ', '+ data.address.country;
+            document.getElementById('modalCandidatePhone').innerText = data.phone;
+            document.getElementById('modalCandidateEmail').innerText = data.email;
+
+            const skills = document.getElementById('modalCandidateSkill');
+            skills.innerHTML = '';
+            data.candidateSkills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerText = skill.skill.skill_name + ' - ' + skill.skill_level;
+                skills.appendChild(li);
+            });
+
+            const experiences = document.getElementById('modalCandidateExperience');
+            experiences.innerHTML = '';
+            data.experiences.forEach(experience => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${experience.role}</td>
+                    <td>${experience.company}</td>
+                    <td>${experience.fromDate}</td>
+                    <td>${experience.toDate}</td>
+                    <td>${experience.work_desc}</td>
+                `;
+                experiences.appendChild(tr);
+            });
 
             const modal = new bootstrap.Modal(document.getElementById('candidateModal'));
             modal.show();
         })
     })
-
-
-
 
 </script>
 </body>

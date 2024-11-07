@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Candidate implements Serializable {
 
     @Column(name = "dob", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     @Column(name = "email", nullable = false)
@@ -43,7 +45,7 @@ public class Candidate implements Serializable {
     private List<CandidateSkill> candidateSkills = new ArrayList<>();
 
 
-public Candidate() {
+    public Candidate() {
     }
 
     public Candidate(Long id, LocalDate dob, String email, String fullName, String phone, Address address) {

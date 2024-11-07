@@ -74,7 +74,6 @@ public class CandidateController {
         ModelAndView mav = new ModelAndView("candidates/add-candidate");
         Candidate candidate = new Candidate();
         candidate.setCandidateSkills(new ArrayList<>());
-        List<CandidateSkill> candidateSkills = new ArrayList<CandidateSkill>();
         Experience experience = new Experience();
         candidate.setAddress(new Address());
         mav.addObject("candidate", candidate);
@@ -100,6 +99,7 @@ public class CandidateController {
         candidateRepository.save(candidate);
 
         Candidate canbyEmail = candidateRepository.findByEmail(candidate.getEmail());
+        System.out.println(candidate.getCandidateSkills());
 
         // Lưu từng CandidateSkill
         for (CandidateSkill candidateSkill : candidate.getCandidateSkills()) {
