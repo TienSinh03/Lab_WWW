@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,6 +42,7 @@ public class Company implements Serializable {
     private Address address;
 
     @OneToMany(mappedBy = "company")
+    @ToString.Exclude
     private List<Job> jobs = new ArrayList<>();
 
     public Company(String about, String email, String compName, String phone, String webUrl) {

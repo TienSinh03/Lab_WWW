@@ -60,6 +60,8 @@ public class CandidateController {
         Page<Candidate> candidatePage = candidateServices.findAll(currentPage - 1, pageSize, "id", "asc");
         model.addAttribute("candidatePage", candidatePage);
 
+        System.out.println(candidatePage.getContent().stream().toList());
+
         int totalPages = candidatePage.getTotalPages(); // get the total number of pages
         if(totalPages>0) {
             List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages) // create a list of page numbers from 1 to totalPages

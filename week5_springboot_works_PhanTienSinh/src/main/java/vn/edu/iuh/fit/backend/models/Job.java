@@ -31,10 +31,10 @@ public class Job implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company")
     @JsonIgnore
+    @ToString.Exclude
     private Company company;
 
     @OneToMany(mappedBy = "job")
-    @ToString.Exclude
     private List<JobSkill> applications = new ArrayList<>();
 
 }

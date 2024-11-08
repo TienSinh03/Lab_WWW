@@ -32,6 +32,7 @@ public class JobSkill implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     @JsonIgnore
+    @ToString.Exclude
     private Job job;;
 
     @Column(name = "skill_level", nullable = false)

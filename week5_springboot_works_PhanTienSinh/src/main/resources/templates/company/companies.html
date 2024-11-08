@@ -35,7 +35,8 @@
                     <p hidden="hidden" th:text="${company.id}" id="id-company"></p>
                     <h5 class="card-title" th:text="${company.compName}"></h5>
                     <p class="card-text" th:text="${company.address}"></p>
-                    <a href="#" class="btn btn-primary">View Job</a>
+                    <a th:href="@{/jobs(companyId=${company.id})}">View Job</a>
+
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@
     <div class="inline" th:if="${companyPage.getTotalPages() > 0}" th:each="pageNumber : ${pageNumbers}">
 
         <!--  Có dạng http://localhost:8080/candidates?size=10&page=2  -->
-        <a th:href="@{/candidates/list_paging(size=${companyPage.size}, page=${pageNumber})}"
+        <a th:href="@{/company/list(size=${companyPage.size}, page=${pageNumber})}"
            th:text="${pageNumber}"
            th:class="${pageNumber == companyPage.number + 1} ? active"
         ></a>
@@ -61,6 +62,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <p hidden="hidden"><strong>ID:</strong> <span id="modalCompanyId"></span></p>
                 <p><strong>Name:</strong> <span id="modalCompanyName"></span></p>
                 <p><strong>Address:</strong> <span id="modalCompanyAddress"></span></p>
                 <p><strong>Email:</strong> <span id="modalCompanyEmail"></span></p>
@@ -69,7 +71,7 @@
                 <p><strong>About:</strong> <span id="modalCompanyAbout"></span></p>
             </div>
             <div class="modal-footer d-flex">
-                <a href="#" class="btn btn-outline-primary me-3">View Job</a>
+                <a class="btn btn-primary">View Job</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -85,12 +87,17 @@
             const response = await fetch(`http://localhost:8080/api/companies/${companyId}`);
             const data = await response.json();
 
+            document.getElementById('modalCompanyId').innerText = data.id;
             document.getElementById('modalCompanyName').innerText = data.compName;
             document.getElementById('modalCompanyAddress').innerText = 'Number ' + data.address.number + ', ' + data.address.street + ' street, ' + data.address.city + ' city, ' + data.address.zipcode + ', ' + data.address.country;
             document.getElementById('modalCompanyEmail').innerText = data.email;
             document.getElementById('modalCompanyPhone').innerText = data.phone;
             document.getElementById('modalCompanyWebUrl').innerText = data.webUrl;
             document.getElementById('modalCompanyAbout').innerText = data.about;
+
+            const viewJobLink = document.querySelector('.modal-footer .btn-primary');
+            viewJobLink.href = `/jobs?companyId=${companyId}`;
+
             const modal = new bootstrap.Modal(document.getElementById('companyModal'));
             modal.show();
         })
