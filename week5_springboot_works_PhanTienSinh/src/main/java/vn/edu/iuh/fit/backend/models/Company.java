@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,14 +36,18 @@ public class Company implements Serializable {
     @Column(name = "web_url")
     private String webUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
-    @ToString.Exclude
     private Address address;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Job> jobs;
+    @OneToMany(mappedBy = "company")
+    private List<Job> jobs = new ArrayList<>();
 
-
+    public Company(String about, String email, String compName, String phone, String webUrl) {
+        this.about = about;
+        this.email = email;
+        this.compName = compName;
+        this.phone = phone;
+        this.webUrl = webUrl;
+    }
 }

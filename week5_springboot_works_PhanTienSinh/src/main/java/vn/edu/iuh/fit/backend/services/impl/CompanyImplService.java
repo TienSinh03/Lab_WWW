@@ -1,6 +1,10 @@
 package vn.edu.iuh.fit.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.models.Company;
@@ -48,6 +52,12 @@ public class CompanyImplService implements CompanyService {
         repo.deleteById(id);
     }
 
+    @Override
+    public Page<Company> getAllByPaging(int pageNo, int size, String sortField, String sortDir) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortField);
+        Pageable page = PageRequest.of(pageNo, size, sort);
+        return repo.findAll(page);
+    }
 
 
 }

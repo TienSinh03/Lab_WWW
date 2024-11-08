@@ -1,6 +1,8 @@
 package vn.edu.iuh.fit.backend.services;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.models.Company;
 
 import java.util.List;
@@ -18,5 +20,6 @@ public interface CompanyService {
 
     void delete(Long id);
 
+    public Page<Company> getAllByPaging(int pageNo, int size, String sortField, String sortDir);
 
 }

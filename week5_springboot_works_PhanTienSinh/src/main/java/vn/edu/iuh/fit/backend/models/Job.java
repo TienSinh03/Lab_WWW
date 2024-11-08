@@ -1,9 +1,11 @@
 package vn.edu.iuh.fit.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,11 +30,11 @@ public class Job implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company")
-    @ToString.Exclude
+    @JsonIgnore
     private Company company;
 
-    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "job")
     @ToString.Exclude
-    private List<JobSkill> applications;
+    private List<JobSkill> applications = new ArrayList<>();
 
 }
