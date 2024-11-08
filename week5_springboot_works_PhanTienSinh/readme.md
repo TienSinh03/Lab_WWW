@@ -14,6 +14,9 @@ Khi ứng dụng đang chạy, bạn có thể truy cập giao diện web bằng
 ## Minh chứng 
 <h3> API candidate </h3>
 
+> Link api: (http://localhost:8080/api/companies/all)
+
+
 ![Screenshot 2024-11-08 024747](https://github.com/user-attachments/assets/d1d3db2d-683c-491a-94b8-1fb0edf8b000)
 
 <h3> LOAD DỮ LIỆU KHÔNG PHÂN TRANG  </h3>
