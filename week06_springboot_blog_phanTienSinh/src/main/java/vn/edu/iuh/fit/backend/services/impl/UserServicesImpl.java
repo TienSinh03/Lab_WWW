@@ -19,6 +19,7 @@ import vn.edu.iuh.fit.backend.repositories.UserRepository;
 import vn.edu.iuh.fit.backend.services.UserServices;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
  * @description:
@@ -43,5 +44,21 @@ public class UserServicesImpl implements UserServices {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         return (Page<UserDTO>) userRepository.findAll(pageable).stream().map(userMapper::toDTO).toList();
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+        return userMapper.toDTO(userRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public UserDTO findByEmailAndPassword(String email, String password) {
+        return userMapper.toDTO(userRepository.findByEmailAndPassword(email, password).orElse(null));
+    }
+
+    @Override
+    public UserDTO save(UserDTO userDTO) {
+        User user = userMapper.toEntity(userDTO);
+        return userMapper.toDTO(userRepository.save(user));
     }
 }

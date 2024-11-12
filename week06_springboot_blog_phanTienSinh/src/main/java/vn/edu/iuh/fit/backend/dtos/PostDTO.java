@@ -35,5 +35,5 @@ public class PostDTO implements java.io.Serializable{
     private String content;
     private UserDTO author;
     private PostDTO parent;
-//    private Set<PostCommentDTO> postComments;
+    private Set<PostCommentDTO> postComments;
 }

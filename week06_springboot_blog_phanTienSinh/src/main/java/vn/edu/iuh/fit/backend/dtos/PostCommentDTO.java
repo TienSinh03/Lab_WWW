@@ -27,8 +27,6 @@ public class PostCommentDTO implements java.io.Serializable{
     private Instant createdAt;
     private Instant publishedAt;
     private String content;
-    private PostCommentDTO parent;
     private UserDTO user;
-    private PostDTO post;
 
 }

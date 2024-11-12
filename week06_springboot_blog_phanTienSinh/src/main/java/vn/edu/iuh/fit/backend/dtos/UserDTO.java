@@ -30,6 +30,7 @@ public class UserDTO implements Serializable {
     private String lastName;
     private String mobile;
     private String email;
+    private String passwordHash;
     private Instant registeredAt;
     private Instant lastLogin;
     private String intro;

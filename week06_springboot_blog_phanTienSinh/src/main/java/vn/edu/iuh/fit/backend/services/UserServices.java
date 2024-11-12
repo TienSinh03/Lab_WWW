@@ -21,5 +21,8 @@ public interface UserServices {
     public List<UserDTO> getUsers_NoPaging();
 
     public Page<UserDTO> getUsers_Paging(int page, int size, String sortBy, String sortDirection);
+    public UserDTO getUserById(Long id);
 
+    public UserDTO findByEmailAndPassword(String email, String password);
+    public UserDTO save(UserDTO userDTO);
 }
