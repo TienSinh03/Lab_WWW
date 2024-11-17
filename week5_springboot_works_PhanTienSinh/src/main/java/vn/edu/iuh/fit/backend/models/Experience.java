@@ -19,11 +19,10 @@ import java.time.LocalDate;
 @Table(name = "experience")
 public class Experience implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "exp_id")
     @JsonProperty("exp_id")
     private long id;
 
-    @Column(name = "company",nullable = false, length = 120)
+    @Column(name = "company_name",nullable = false, length = 120)
     @JsonProperty("company")
     private String companyName;
 

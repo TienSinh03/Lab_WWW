@@ -44,6 +44,19 @@ public class Candidate implements Serializable {
     @OneToMany(mappedBy = "candidate")
     private List<CandidateSkill> candidateSkills = new ArrayList<>();
 
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "can_id", nullable = false)
+    private User users;
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
+
 
     public Candidate() {
     }

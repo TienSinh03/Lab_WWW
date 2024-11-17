@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface JobServices {
     public List<Job> getAllJobs();
-    public Page<List<Job>> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize, String sortBy, String sortDirection);
+    public Page<Job> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize, String sortBy, String sortDirection);
     public List<Job> getJobsByCompanyIda(Long companyId);
     public Job getJobById(Long id);
 }

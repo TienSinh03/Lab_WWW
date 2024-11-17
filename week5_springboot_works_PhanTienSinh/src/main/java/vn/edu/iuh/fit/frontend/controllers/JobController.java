@@ -50,7 +50,7 @@ public class JobController {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
 
         // Gọi trực tiếp repository để kiểm tra
-        Page<List<Job>> jobPage = jobRepository.findJobsByCompanyId_Paging(companyId, pageable);
+        Page<Job> jobPage = jobRepository.findJobByCompanyId(companyId, pageable);
 
         System.out.println("Job Page Content: " + jobPage.getContent());
         System.out.println("Total Pages: " + jobPage.getTotalPages());

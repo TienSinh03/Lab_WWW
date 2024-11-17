@@ -1,0 +1,21 @@
+.nav-pills .nav-link {
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.form-check-input:checked {
+    background-color: #198754;
+    border-color: #198754;
+}

@@ -24,8 +24,8 @@ import java.util.List;
  * @date: 11/2/2024
  */
 public interface IJobRepository extends JpaRepository<Job, Long> {
-    @Query("SELECT j FROM Job j WHERE j.company.id = :companyId")
-    Page<List<Job>> findJobsByCompanyId_Paging(@Param("companyId") Long companyId, Pageable pageable);
+    @Query("SELECT j FROM Job j WHERE j.company.id = ?1")
+    Page<Job> findJobByCompanyId(Long companyId, Pageable pageable);
 
 
     @Query("SELECT j FROM Job j WHERE j.company.id = ?1")

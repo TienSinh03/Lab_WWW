@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.backend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,17 +11,15 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
+@SuperBuilder
 @Table(name = "company")
-public class Company implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comp_id", nullable = false)
-    private Long id;
+@PrimaryKeyJoinColumn(name = "com_id")
+public class Company extends User implements Serializable {
+
 
     @Column(name = "about", length = 2000)
     private String about;
@@ -37,13 +36,14 @@ public class Company implements Serializable {
     @Column(name = "web_url")
     private String webUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
     @OneToMany(mappedBy = "company")
     @ToString.Exclude
     private List<Job> jobs = new ArrayList<>();
+
 
     public Company(String about, String email, String compName, String phone, String webUrl) {
         this.about = about;

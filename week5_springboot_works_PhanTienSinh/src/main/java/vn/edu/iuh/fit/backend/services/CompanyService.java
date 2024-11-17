@@ -2,6 +2,7 @@ package vn.edu.iuh.fit.backend.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.backend.dtos.CompanyDto;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.models.Company;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public interface CompanyService {
 
-    List<Company> getAll();
+    List<CompanyDto> getAll();
 
     Optional<Company> getById(Long id);
 

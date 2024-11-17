@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.edu.iuh.fit.backend.dtos.CompanyDto;
 import vn.edu.iuh.fit.backend.models.Company;
+import vn.edu.iuh.fit.backend.repositories.ICompanyRepository;
 import vn.edu.iuh.fit.backend.services.CompanyService;
 
 import java.util.List;
@@ -27,9 +29,10 @@ public class CompanyResources {
     @Autowired
     private CompanyService companyService;
 
+
     @RequestMapping("/all")
-    public ResponseEntity<List<Company>> findAll() {
-        List<Company> companies = companyService.getAll();
+    public ResponseEntity<List<CompanyDto>> findAll() {
+        List<CompanyDto> companies = companyService.getAll();
         return ResponseEntity.ok(companies);
     }
 

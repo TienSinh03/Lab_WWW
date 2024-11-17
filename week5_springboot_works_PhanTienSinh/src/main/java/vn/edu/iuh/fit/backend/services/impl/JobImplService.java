@@ -33,11 +33,11 @@ public class JobImplService implements JobServices {
     }
 
     @Override
-    public Page<List<Job>> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize, String sortBy, String sortDirection) {
+    public Page<Job> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        return jobRepository.findJobsByCompanyId_Paging(companyId, pageable);
+        return jobRepository.findJobByCompanyId(companyId, pageable);
     }
 
 

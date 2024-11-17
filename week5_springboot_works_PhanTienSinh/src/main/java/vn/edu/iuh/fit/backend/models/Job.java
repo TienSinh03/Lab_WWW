@@ -28,13 +28,14 @@ public class Job implements Serializable {
     @Column(name = "job_name", nullable = false)
     private String jobName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "com_id")
     @JsonIgnore
     @ToString.Exclude
     private Company company;
 
-    @OneToMany(mappedBy = "job")
+    @OneToMany(mappedBy = "job", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<JobSkill> applications = new ArrayList<>();
+
 
 }

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.backend.dtos.CompanyDto;
+import vn.edu.iuh.fit.backend.mapper.CompanyMapper;
 import vn.edu.iuh.fit.backend.models.Company;
 
 import vn.edu.iuh.fit.backend.repositories.ICompanyRepository;
@@ -20,10 +22,12 @@ public class CompanyImplService implements CompanyService {
     @Autowired
     private ICompanyRepository repo;
 
+    @Autowired
+    private CompanyMapper mapper;
 
     @Override
-    public List<Company> getAll() {
-        return repo.findAll();
+    public List<CompanyDto> getAll() {
+        return repo.findAll().stream().map(mapper::toDto).toList();
     }
 
     @Override
