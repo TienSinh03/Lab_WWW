@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Builder
 public class CandidateSkillDto implements Serializable {
     SkillDto skill;
-    CandidateDto candidate;
+    CandidateSkillIdDto id;
     SkillLevel skillLevel;
     String moreInfo;
 }

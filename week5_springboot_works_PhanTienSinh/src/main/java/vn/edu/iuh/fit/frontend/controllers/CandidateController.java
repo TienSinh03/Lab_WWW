@@ -1,6 +1,7 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import vn.edu.iuh.fit.backend.services.CandidateServices;
 import vn.edu.iuh.fit.backend.services.CandidateSkillService;
 import vn.edu.iuh.fit.backend.services.ExperienceService;
 import vn.edu.iuh.fit.backend.services.SkillService;
+import vn.edu.iuh.fit.frontend.models.CandidateModels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,11 @@ import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/candidates")
+@SessionAttributes("userLogin")
 public class CandidateController {
+
+    @Autowired
+    private CandidateModels candidateModels;
 
     @Autowired
     private CandidateServices candidateServices;
@@ -51,21 +57,21 @@ public class CandidateController {
         return "candidates/candidates";
     }
 
-    @GetMapping("/list_paging")
-    public String showCandidateListPaging(Model model, @RequestParam("page")Optional<Integer> page,
-                                          @RequestParam("size")Optional<Integer> size) {
-        int currentPage = page.orElse(1); // default page number is 1 (the first page) or get the page number from the request
-        int pageSize = size.orElse(10); // default page size is 10 or get the page size from the request
+    @GetMapping("")
+    public String showCandidateListPaging(HttpSession session, Model model, @RequestParam( defaultValue = "0",required = false)Integer pageNo,
+                                          @RequestParam(defaultValue="10",required = false) Integer pageSize) {
 
-        PageDto<CandidateDto> candidatePage = candidateServices.findAll(currentPage - 1, pageSize);
+        if(pageNo == null) {
+            pageNo = 0;
+        }
+        
+        if(pageSize == null) {
+            pageSize = 10;
+        }
+
+        PageDto<CandidateDto> candidatePage = candidateModels.getCandidates(pageNo, pageSize); // get the page of candidates
         model.addAttribute("candidatePage", candidatePage);
 
-        int totalPages = candidatePage.getTotalPages(); // get the total number of pages
-        if(totalPages>0) {
-            List<Integer> pageNumbers= IntStream.rangeClosed(1, totalPages) // create a list of page numbers from 1 to totalPages
-                    .boxed().toList();
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
         return "candidates/candidates-paging";
     }
 

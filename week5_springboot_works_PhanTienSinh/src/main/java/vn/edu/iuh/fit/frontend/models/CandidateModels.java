@@ -32,7 +32,8 @@ public class CandidateModels {
 
     public PageDto<CandidateDto> getCandidates(int pageNo, int pageSize) {
         return restTemplate.getForObject("http://localhost:8080/api/candidates?pageNo=" + pageNo
-                + "&pageSize=" + pageSize, PageDto.class);
+                + "&pageSize=" + pageSize,
+                PageDto.class);
     }
 
     public Integer countCandidates() {

@@ -9,7 +9,7 @@ import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.CandidateSkillDto;
 import vn.edu.iuh.fit.backend.entities.CandidateSkill;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {SkillMapper.class, CandidateSkillIdMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {SkillMapper.class, CandidateSkillIdMapper.class, AddressMapper.class})
 public interface CandidateSkillMapper {
     CandidateSkill toEntity(CandidateSkillDto candidateSkillDto);
 

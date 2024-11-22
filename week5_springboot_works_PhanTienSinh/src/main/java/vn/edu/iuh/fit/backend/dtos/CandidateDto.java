@@ -7,6 +7,7 @@ import vn.edu.iuh.fit.backend.entities.Experience;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 /*
  * @description:
@@ -29,6 +30,6 @@ public class CandidateDto implements Serializable {
     String fullName;
     String phone;
     AddressDto address;
-    List<Experience> experiences;
-    List<CandidateSkillDto> candidateSkills;
+    List<Experience> experiences = new ArrayList<>();
+    List<CandidateSkillDto> candidateSkills = new ArrayList<>();
 }

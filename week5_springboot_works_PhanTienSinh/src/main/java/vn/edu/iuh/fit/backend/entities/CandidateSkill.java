@@ -19,16 +19,18 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(CandidateSkillId.class)
 public class CandidateSkill implements Serializable {
 
-    @Id
+    @EmbeddedId
+    private CandidateSkillId id;
+
+    @MapsId("skillId")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "skill_id")
     @JsonProperty("skill")
     private Skill skill;
 
-    @Id
+    @MapsId("canId")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "can_id")
     @JsonIgnore
