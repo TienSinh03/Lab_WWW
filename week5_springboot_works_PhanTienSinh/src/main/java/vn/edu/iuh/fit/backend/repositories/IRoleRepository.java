@@ -7,7 +7,7 @@
 package vn.edu.iuh.fit.backend.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import vn.edu.iuh.fit.backend.models.Role;
+import vn.edu.iuh.fit.backend.entities.Role;
 
 /*
  * @description:

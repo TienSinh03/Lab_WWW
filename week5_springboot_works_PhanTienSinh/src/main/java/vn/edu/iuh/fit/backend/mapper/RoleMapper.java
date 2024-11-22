@@ -2,7 +2,7 @@ package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.RoleDto;
-import vn.edu.iuh.fit.backend.models.Role;
+import vn.edu.iuh.fit.backend.entities.Role;
 
 /*
  * @description:

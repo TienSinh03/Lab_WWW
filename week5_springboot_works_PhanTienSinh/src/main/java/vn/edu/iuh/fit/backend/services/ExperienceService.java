@@ -1,7 +1,6 @@
 package vn.edu.iuh.fit.backend.services;
 
-import org.springframework.stereotype.Service;
-import vn.edu.iuh.fit.backend.models.Experience;
+import vn.edu.iuh.fit.backend.entities.Experience;
 
 
 public interface ExperienceService {

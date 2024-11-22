@@ -12,22 +12,18 @@ package vn.edu.iuh.fit.backend.services;
  * @date: 11/3/2024
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import vn.edu.iuh.fit.backend.models.Candidate;
-import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
+import vn.edu.iuh.fit.backend.dtos.CandidateDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
 
 import java.util.List;
 
 
 public interface CandidateServices {
-    public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection);
-    public List<Candidate> findAllNoPaging();
-    public Candidate getByEmail(String email);
+    public PageDto<CandidateDto> findAll(int pageNo, int pageSize);
+    public List<CandidateDto> findAllNoPaging();
+    public CandidateDto getByEmail(String email);
 
-    public Candidate getCandidate(Long id);
+    public CandidateDto getCandidate(Long id);
+
+    public Integer countCandidates();
 }

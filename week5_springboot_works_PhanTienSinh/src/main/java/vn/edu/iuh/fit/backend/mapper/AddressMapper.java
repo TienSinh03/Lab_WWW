@@ -9,7 +9,7 @@ package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.AddressDto;
-import vn.edu.iuh.fit.backend.models.Address;
+import vn.edu.iuh.fit.backend.entities.Address;
 
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

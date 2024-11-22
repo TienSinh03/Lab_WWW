@@ -1,19 +1,17 @@
 package vn.edu.iuh.fit.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.backend.dtos.SkillDto;
 import vn.edu.iuh.fit.backend.enums.SkillType;
-import vn.edu.iuh.fit.backend.models.CandidateSkill;
-import vn.edu.iuh.fit.backend.models.Skill;
+import vn.edu.iuh.fit.backend.entities.Skill;
+import vn.edu.iuh.fit.backend.mapper.SkillMapper;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 import vn.edu.iuh.fit.backend.repositories.ISkillRepository;
 import vn.edu.iuh.fit.backend.services.SkillService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -22,19 +20,23 @@ public class SkillImplService implements SkillService {
     private ISkillRepository repo;
     @Autowired
     private ICandidateRepository candidateRepository;
+    @Autowired
+    private SkillMapper skillMapper;
 
     @Override
-    public Skill addSkill(Skill skill) {
-        return repo.save(skill);
+    public SkillDto addSkill(SkillDto skill) {
+        return skillMapper.toDto(repo.save(skillMapper.toEntity(skill)));
     }
 
     @Override
-    public List<Skill> getAllSkills() {
-        return repo.findAll();
+    public List<SkillDto> getAllSkills() {
+        return repo.findAll().stream()
+                .map(skillMapper::toDto)
+                .toList();
     }
 
     @Override
-    public List<Skill> suggestSkillsForCandidate(Long candidateId) {
+    public List<SkillDto> suggestSkillsForCandidate(Long candidateId) {
         return null;
     }
 
@@ -43,7 +45,7 @@ public class SkillImplService implements SkillService {
     }
 
     @Override
-    public Optional<Skill> getSkillById(Long id) {
-        return repo.findById(id);
+    public Optional<SkillDto> getSkillById(Long id) {
+        return repo.findById(id).map(skillMapper::toDto);
     }
 }

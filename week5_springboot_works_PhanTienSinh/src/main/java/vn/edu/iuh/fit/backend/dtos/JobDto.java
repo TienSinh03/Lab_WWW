@@ -1,11 +1,12 @@
 package vn.edu.iuh.fit.backend.dtos;
 
 import lombok.*;
-import lombok.Value;
-import vn.edu.iuh.fit.backend.dtos.CompanyDto;
-import vn.edu.iuh.fit.backend.models.Job;
+import lombok.experimental.SuperBuilder;
+import vn.edu.iuh.fit.backend.entities.Job;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 /*
  * @description:
  * @author: Sinh Phan Tien
@@ -19,9 +20,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@SuperBuilder
 public class JobDto implements Serializable {
     Long id;
     String jobDesc;
     String jobName;
-    CompanyDto company;
+    CompanyDto company = new CompanyDto();
+    List<JobSkillDto> jobSkills = new ArrayList<>();
 }

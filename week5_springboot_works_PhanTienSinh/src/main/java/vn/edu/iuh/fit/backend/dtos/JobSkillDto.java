@@ -10,16 +10,17 @@ import java.io.Serializable;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.JobSkill}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.JobSkill}
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class JobSkillDto implements Serializable {
+    JobSkillIdDto id;
     SkillDto skill;
-    JobDto job;
     SkillLevel skillLevel;
     String moreInfo;
 }

@@ -1,9 +1,7 @@
 package vn.edu.iuh.fit.backend.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
-import lombok.Value;
 
 import java.io.Serializable;
 /*
@@ -12,7 +10,7 @@ import java.io.Serializable;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.Address}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.Address}
  */
 @Getter
 @Setter

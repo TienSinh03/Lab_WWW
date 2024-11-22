@@ -1,8 +1,7 @@
 package vn.edu.iuh.fit.backend.dtos;
 
 import lombok.*;
-import lombok.Value;
-import vn.edu.iuh.fit.backend.models.Experience;
+import vn.edu.iuh.fit.backend.entities.Experience;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,6 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class ExperienceDto implements Serializable {
     long id;
     String companyName;

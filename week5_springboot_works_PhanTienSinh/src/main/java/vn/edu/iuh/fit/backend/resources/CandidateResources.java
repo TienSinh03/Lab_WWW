@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.iuh.fit.backend.models.Candidate;
+import vn.edu.iuh.fit.backend.dtos.CandidateDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
-
-import java.util.List;
 
 /*
  * @description:
@@ -28,15 +26,15 @@ public class CandidateResources {
     @Autowired
     private CandidateServices candidateServices;
 
-    @RequestMapping("/all")
-    public ResponseEntity<List<Candidate>> findAll() {
-        List<Candidate> candidates = candidateServices.findAllNoPaging();
+    @RequestMapping("")
+    public ResponseEntity<PageDto<CandidateDto>> findAll(int pageNo, int pageSize) {
+        PageDto<CandidateDto> candidates = candidateServices.findAll(pageNo, pageSize);
         return ResponseEntity.ok(candidates);
     }
 
     @RequestMapping("/{id}")
-    public ResponseEntity<Candidate> findById(@PathVariable Long id) {
-        Candidate candidate = candidateServices.getCandidate(id);
+    public ResponseEntity<CandidateDto> findById(@PathVariable Long id) {
+        CandidateDto candidate = candidateServices.getCandidate(id);
         return ResponseEntity.ok(candidate);
     }
 }

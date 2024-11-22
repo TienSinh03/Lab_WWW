@@ -2,7 +2,7 @@ package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.JobSkillDto;
-import vn.edu.iuh.fit.backend.models.JobSkill;
+import vn.edu.iuh.fit.backend.entities.JobSkill;
 /*
  * @description:
  * @author: Sinh Phan Tien

@@ -6,7 +6,7 @@ package vn.edu.iuh.fit.backend.mapper;
  */
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.CandidateDto;
-import vn.edu.iuh.fit.backend.models.Candidate;
+import vn.edu.iuh.fit.backend.entities.Candidate;
 
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {UserMapper.class, CandidateSkillMapper.class, ExperienceMapper.class, AddressMapper.class})

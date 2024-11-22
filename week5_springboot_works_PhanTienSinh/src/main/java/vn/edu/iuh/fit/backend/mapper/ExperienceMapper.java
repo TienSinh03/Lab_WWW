@@ -2,7 +2,7 @@ package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.ExperienceDto;
-import vn.edu.iuh.fit.backend.models.Experience;
+import vn.edu.iuh.fit.backend.entities.Experience;
 /*
  * @description:
  * @author: Sinh Phan Tien

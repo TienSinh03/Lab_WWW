@@ -7,7 +7,7 @@ package vn.edu.iuh.fit.backend.mapper;
  */
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.CandidateSkillDto;
-import vn.edu.iuh.fit.backend.models.CandidateSkill;
+import vn.edu.iuh.fit.backend.entities.CandidateSkill;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {SkillMapper.class, CandidateSkillIdMapper.class})
 public interface CandidateSkillMapper {

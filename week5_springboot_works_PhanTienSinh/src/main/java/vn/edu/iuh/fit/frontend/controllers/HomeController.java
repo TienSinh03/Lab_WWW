@@ -13,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.backend.dtos.CompanyDto;
 import vn.edu.iuh.fit.backend.dtos.UserDto;
+import vn.edu.iuh.fit.backend.services.CandidateServices;
 import vn.edu.iuh.fit.backend.services.CompanyService;
 import vn.edu.iuh.fit.backend.services.UserService;
+import vn.edu.iuh.fit.frontend.models.CandidateModels;
 import vn.edu.iuh.fit.frontend.models.CompanyModels;
+import vn.edu.iuh.fit.frontend.models.JobModels;
 
 /*
  * @description:
@@ -35,6 +38,12 @@ public class HomeController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private CandidateModels candidateModels;
+
+    @Autowired
+    private JobModels jobModels;
 
     @GetMapping("/login")
     public String showFormLogin(Model model) {
@@ -63,6 +72,12 @@ public class HomeController {
         UserDto user = (UserDto) session.getAttribute("userLogin");
         CompanyDto company = companyModels.getCompanyById(user.getId());
         model.addAttribute("user", company);
+
+        Integer countJob = jobModels.countJobByCompanyId(company.getId());
+        model.addAttribute("countJob", countJob);
+
+        Integer countCandidate = candidateModels.countCandidates();
+        model.addAttribute("countCandidate", countCandidate);
         return "admin";
     }
 }

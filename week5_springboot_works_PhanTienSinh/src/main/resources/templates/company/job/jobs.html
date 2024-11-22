@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../static/css/main.css"/>
     <meta charset="UTF-8">
     <title>Jobs</title>
     <style>
@@ -24,55 +26,136 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="text-center my-4">All Jobs</h1>
-    <div th:if="${jobPage.size() > 0}">
-        <div th:each="job : ${jobPage}" class="row mb-3 justify-content-center">
-            <div class="col-10 card p-3 shadow-sm">
-                <div class="d-flex align-items-start">
-                    <!-- Hình ảnh -->
-                    <img src="https://i.ibb.co/RhHCMcG/DALL-E-2024-11-08-12-50-20-A-professional-looking-image-representing-an-IT-company-The-image-include.webp"
-                         alt="job image"
-                         class="img-fluid me-3"
-                         style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="bg-dark text-white" style="width: 280px; min-height: 100vh;">
+        <div class="p-3">
+            <h5 class="text-white">JobSeeker Admin</h5>
+            <hr>
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" th:href="@{/dashboard}">
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-white" th:href="@{/jobs}">
+                        <i class="bi bi-briefcase me-2"></i>
+                        Jobs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="applications.html">
+                        <i class="bi bi-file-text me-2"></i>
+                        Applications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="users.html">
+                        <i class="bi bi-people me-2"></i>
+                        Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="settings.html">
+                        <i class="bi bi-gear me-2"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-                    <!-- Nội dung -->
-                    <div class="w-100">
-                        <!-- Tên công việc -->
-                        <p hidden="hidden" th:text="${job.id}" id="id-job"></p>
-                        <p hidden="hidden" th:text="${job.getCompany().getAddress()}" id="address"></p>
+    <!-- Main Content -->
+    <div class="flex-grow-1 bg-light">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+            <div class="container-fluid">
+                <h1 class="h3 mb-0">Jobs Management</h1>
+                <a class="btn btn-primary" th:href="@{/jobs/add}">
+                    <i class="bi bi-plus-lg"></i> Add New Job
+                </a>
+            </div>
+        </nav>
 
-                        <h5 class="mb-2" th:text="${job.jobName}" ></h5>
-
-                        <!-- Tên công ty -->
-                        <p class="mb-2 text-muted" th:text="${job.getCompany().getCompName()}" id="company-name"></p>
-
-                        <!-- Địa chỉ công ty -->
-                        <p class="mb-2">
-                            <i class="bi bi-geo-alt"></i>
-                            <span class="py-1 px-2 rounded" style="background-color: #f4f5f5"
-                                  th:text="${job.getCompany().getAddress().getCity()}"></span>
-
-
-                            <span class="py-1 px-2 rounded" style="background-color: #f4f5f5">15 triệu</span>
-                        </p>
-                    </div>
-
-                    <!-- Align buttons to the right -->
-                    <div class="ms-auto align-items-center">
-                        <div style="width: 150px; margin-bottom: 15px">
-                            <button class="btn btn-primary">Recruitment</button>
+        <!-- Content -->
+        <div class="container-fluid p-4">
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <select class="form-select job-filter" id="jobStatus">
+                                <option value="">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="draft">Draft</option>
+                                <option value="closed">Closed</option>
+                            </select>
                         </div>
-                        <div style="width: 150px" id="modalDetailJob">
-                            <button class="btn btn-outline-secondary btn-detail" data-bs-toggle="modal" data-bs-target="#jobModal">View Details</button>
+                        <div class="col-md-3">
+                            <select class="form-select job-filter" id="jobType">
+                                <option value="">All Types</option>
+                                <option value="full-time">Full Time</option>
+                                <option value="part-time">Part Time</option>
+                                <option value="contract">Contract</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Search jobs...">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-secondary w-100">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Jobs Table -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" >
+                            <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Location</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="jobShowModal">
+                            <tr th:each = "job, iStat : ${jobs.values}">
+                                <td id="id-job" th:text="${job.id}" hidden="hidden"></td>
+                                <td hidden="hidden" th:text="${company.address}" id="address"></td>
+
+                                <td th:text="${job.jobName}"></td>
+                                <td th:text="${company.compName}" id="company-name"></td>
+                                <td th:text="${company.address.city}" ></td>
+                                <td th:text="${job.jobDesc}"></td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary me-1" th:href="@{/jobs/edit/{jobId}(jobId = ${job.id})}">Edit</a>
+                                    <button class="btn btn-sm btn-outline-danger delete-job" data-job-id="1">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Add more job rows as needed -->
+                            </tbody>
+                        </table>
+                        <nav aria-label="page navigation" class="mt-4" th:if="${jobs.getTotalPages() > 0}">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:each="page : ${#numbers.sequence(0, jobs.totalPages - 1)}" th:class="${page == jobs.page} ? 'active'">
+                                    <a class="page-link" th:href="@{/jobs(pageNo=${page},pageSize=${jobs.size})}" th:text="${page + 1}"></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div th:if="${jobPage.size() == 0}" class="text-center">
-        <p>No jobs found for this company.</p>
     </div>
 </div>
 
@@ -85,29 +168,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex align-items-start">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h1 class="h2 mb-2" id="modalJobName"></h1>
+
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-building me-2"></i> <span id="modalJobCompany"></span>
+                        </p>
+
+                        <p class="text-muted mb-0">
+                            <i class="bi bi-geo-alt me-2"></i> <span id="modalJobAddress"></span>
+                        </p>
+                    </div>
                     <!-- Hình ảnh -->
                     <img src="https://i.ibb.co/RhHCMcG/DALL-E-2024-11-08-12-50-20-A-professional-looking-image-representing-an-IT-company-The-image-include.webp"
                          alt="job image"
                          class="img-fluid me-3"
                          style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 15px">
-                    <!-- Nội dung -->
-                    <div class="w-100">
-                        <p hidden="hidden"><strong>ID:</strong> <span id="modalJobId"></span></p>
-                        <h5 class="mb-2" id="modalJobName"></h5>
-                    </div>
+                </div>
+                <div class="mb-4">
+                    <span class="badge bg-success me-2">15 triệu</span>
+<!--                    <span class="badge bg-info me-2">Remote Optional</span>-->
+<!--                    <span class="badge bg-primary">Senior Level</span>-->
                 </div>
 
-                <h5 class="mb-2" id="modalJobCompany"></h5>
-                <h6>Address</h6>
-                <p class="py-1 px-2 rounded" style="background-color: #f4f5f5;" id="modalJobAddress">
-                </p>
-                <h6>Salary</h6>
-                <p class="py-1 px-2 rounded" style="background-color: #f4f5f5">15 triệu</p>
+                <h3 class="mb-3">Job Description</h3>
+                <p id="modalJobDescription"></p>
 
-                <p><strong>Job Description:</strong> <span id="modalJobDescription" style="font-size: 16px"></span></p>
-                <h5>Required Skills:</h5>
-                <ul id="modalJobSkill"></ul>
+                <h3>Required Skills:</h3>
+                <ul id="modalJobSkill" class="list-unstyled"></ul>
             </div>
         </div>
     </div>
@@ -115,31 +204,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.querySelectorAll('.btn-detail').forEach(button => {
-        button.addEventListener('click', async function () {
-            const card = button.closest('.card');
-            const jobId = card.querySelector('#id-job').textContent;
-            const address = card.querySelector('#address').textContent;
-            const companyName = card.querySelector('#company-name').textContent;
+    document.querySelectorAll('#jobShowModal').forEach(row => {
+        row.addEventListener('click', async function () {
+            const jobId = row.querySelector('#id-job').textContent;
 
             const response = await fetch(`http://localhost:8080/api/jobs/${jobId}`);
             const data = await response.json();
 
-            document.getElementById('modalJobId').innerText = data.id;
+            const address = data.company.address;
             document.getElementById('modalJobName').innerText = data.jobName;
-            document.getElementById('modalJobCompany').innerText = companyName;
+            document.getElementById('modalJobCompany').innerText = data.company.compName;
             document.getElementById('modalJobDescription').innerText = data.jobDesc;
-            document.getElementById('modalJobAddress').innerText = address;
+            document.getElementById('modalJobAddress').innerText =address.street + ', ' + address.city+ ', ' + address.country + ', ' + address.zipcode;
 
+            const responseSkill = await fetch(`http://localhost:8080/api/jobs/${jobId}/skills`);
+            const dataSkill = await responseSkill.json();
             const skills = document.getElementById('modalJobSkill');
             skills.innerHTML = '';
-            data.applications.forEach(application => {
+            dataSkill.forEach(skill => {
                 const li = document.createElement('li');
-                li.innerText = application.skill.skill_name + ' - ' + application.skill_level;
+                li.innerHTML = `<i class="bi bi-check2-circle text-success me-2"> </i> ${skill.skill.skillName} - ${skill.skillLevel}`;
                 skills.appendChild(li);
             })
 
-            const modal = new bootstrap.Modal(document.getElementById('companyModal'));
+            const modal = new bootstrap.Modal(document.getElementById('jobModal'));
             modal.show();
         })
 

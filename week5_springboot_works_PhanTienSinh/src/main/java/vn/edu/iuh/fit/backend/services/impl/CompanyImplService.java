@@ -5,11 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.dtos.CompanyDto;
 import vn.edu.iuh.fit.backend.mapper.CompanyMapper;
-import vn.edu.iuh.fit.backend.models.Company;
+import vn.edu.iuh.fit.backend.entities.Company;
 
 import vn.edu.iuh.fit.backend.repositories.ICompanyRepository;
 import vn.edu.iuh.fit.backend.services.CompanyService;

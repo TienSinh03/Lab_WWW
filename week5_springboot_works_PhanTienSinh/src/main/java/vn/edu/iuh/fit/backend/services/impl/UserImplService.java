@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.dtos.UserDto;
 import vn.edu.iuh.fit.backend.mapper.UserMapper;
-import vn.edu.iuh.fit.backend.models.User;
+import vn.edu.iuh.fit.backend.entities.User;
 import vn.edu.iuh.fit.backend.repositories.IUserRepository;
 import vn.edu.iuh.fit.backend.services.UserService;
 

@@ -6,8 +6,10 @@
 
 package vn.edu.iuh.fit.backend.services;
 
-import org.springframework.data.domain.Page;
-import vn.edu.iuh.fit.backend.models.Job;
+import vn.edu.iuh.fit.backend.dtos.JobDto;
+import vn.edu.iuh.fit.backend.dtos.JobSkillDto;
+import vn.edu.iuh.fit.backend.dtos.JobSkillIdDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
 
 import java.util.List;
 
@@ -17,8 +19,14 @@ import java.util.List;
  * @date: 11/8/2024
  */
 public interface JobServices {
-    public List<Job> getAllJobs();
-    public Page<Job> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize, String sortBy, String sortDirection);
-    public List<Job> getJobsByCompanyIda(Long companyId);
-    public Job getJobById(Long id);
+    public List<JobDto> getAllJobs();
+    public PageDto<JobDto> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize);
+    public List<JobDto> getJobsByCompanyIda(Long companyId);
+    public JobDto getJobById(Long id);
+
+    public JobDto saveJob(JobDto jobDto);
+    public int countJobByCompanyId(Long companyId);
+
+    public List<JobSkillDto> getJobSkillsByJobId(Long jobId);
+
 }

@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import vn.edu.iuh.fit.backend.enums.SkillLevel;
-import vn.edu.iuh.fit.backend.models.*;
+import vn.edu.iuh.fit.backend.dtos.CandidateDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
+import vn.edu.iuh.fit.backend.entities.*;
 import vn.edu.iuh.fit.backend.repositories.IAddressRepository;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
@@ -57,10 +57,8 @@ public class CandidateController {
         int currentPage = page.orElse(1); // default page number is 1 (the first page) or get the page number from the request
         int pageSize = size.orElse(10); // default page size is 10 or get the page size from the request
 
-        Page<Candidate> candidatePage = candidateServices.findAll(currentPage - 1, pageSize, "id", "asc");
+        PageDto<CandidateDto> candidatePage = candidateServices.findAll(currentPage - 1, pageSize);
         model.addAttribute("candidatePage", candidatePage);
-
-        System.out.println(candidatePage.getContent().stream().toList());
 
         int totalPages = candidatePage.getTotalPages(); // get the total number of pages
         if(totalPages>0) {

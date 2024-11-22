@@ -1,6 +1,7 @@
 package vn.edu.iuh.fit.backend.dtos;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,13 +11,14 @@ import java.util.List;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.User}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.User}
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@SuperBuilder
 public class UserDto implements Serializable {
     Long id;
     String password;

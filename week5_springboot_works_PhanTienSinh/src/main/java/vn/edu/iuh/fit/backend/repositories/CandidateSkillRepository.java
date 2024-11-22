@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import vn.edu.iuh.fit.backend.ids.CandidateSkillId;
-import vn.edu.iuh.fit.backend.models.CandidateSkill;
-import vn.edu.iuh.fit.backend.models.Skill;
+import vn.edu.iuh.fit.backend.entities.CandidateSkill;
+import vn.edu.iuh.fit.backend.entities.Skill;
 
 import java.util.List;
 

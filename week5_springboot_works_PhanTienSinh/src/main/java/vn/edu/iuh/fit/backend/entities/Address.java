@@ -1,4 +1,4 @@
-package vn.edu.iuh.fit.backend.models;
+package vn.edu.iuh.fit.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.neovisionaries.i18n.CountryCode;

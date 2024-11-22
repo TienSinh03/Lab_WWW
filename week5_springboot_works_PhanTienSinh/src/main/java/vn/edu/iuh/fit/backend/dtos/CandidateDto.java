@@ -1,10 +1,9 @@
 package vn.edu.iuh.fit.backend.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import lombok.Value;
-import vn.edu.iuh.fit.backend.models.CandidateSkill;
-import vn.edu.iuh.fit.backend.models.Experience;
+import lombok.experimental.SuperBuilder;
+import vn.edu.iuh.fit.backend.entities.CandidateSkill;
+import vn.edu.iuh.fit.backend.entities.Experience;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,13 +14,14 @@ import java.util.List;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.Candidate}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.Candidate}
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@SuperBuilder
 public class CandidateDto implements Serializable {
     Long id;
     LocalDate dob;
@@ -30,5 +30,5 @@ public class CandidateDto implements Serializable {
     String phone;
     AddressDto address;
     List<Experience> experiences;
-    List<CandidateSkill> candidateSkills;
+    List<CandidateSkillDto> candidateSkills;
 }

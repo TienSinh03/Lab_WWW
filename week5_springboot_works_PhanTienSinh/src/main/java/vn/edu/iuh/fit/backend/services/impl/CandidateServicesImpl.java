@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import vn.edu.iuh.fit.backend.models.Candidate;
+import vn.edu.iuh.fit.backend.dtos.CandidateDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
+import vn.edu.iuh.fit.backend.mapper.CandidateMapper;
+import vn.edu.iuh.fit.backend.entities.Candidate;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
 
@@ -29,24 +31,40 @@ public class CandidateServicesImpl implements CandidateServices {
     @Autowired
     private ICandidateRepository candidateRepository;
 
-    public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        return candidateRepository.findAll(pageable);
+    @Autowired
+    private CandidateMapper candidateMapper;
+
+    public PageDto<CandidateDto> findAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Candidate> page = candidateRepository.findAll(pageable);
+        PageDto<CandidateDto> pageDto = new PageDto<>();
+        if (page != null) {
+            pageDto.setPage(pageNo);
+            pageDto.setSize(pageSize);
+            pageDto.setTotal(page.getNumberOfElements());
+            pageDto.setTotalPages(page.getTotalPages());
+            pageDto.setValues(page.stream().map(candidateMapper::toDto).toList());
+        }
+        return pageDto;
     }
 
     @Override
-    public List<Candidate> findAllNoPaging() {
-        return candidateRepository.findAll();
+    public List<CandidateDto> findAllNoPaging() {
+        return candidateRepository.findAll().stream().map(candidateMapper::toDto).toList();
     }
 
     @Override
-    public Candidate getByEmail(String email) {
-        return candidateRepository.findByEmail(email);
+    public CandidateDto getByEmail(String email) {
+        return candidateMapper.toDto(candidateRepository.findByEmail(email));
     }
 
     @Override
-    public Candidate getCandidate(Long id) {
-        return candidateRepository.findById(id).get();
+    public CandidateDto getCandidate(Long id) {
+        return candidateMapper.toDto(candidateRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public Integer countCandidates() {
+        return (int) candidateRepository.count();
     }
 }

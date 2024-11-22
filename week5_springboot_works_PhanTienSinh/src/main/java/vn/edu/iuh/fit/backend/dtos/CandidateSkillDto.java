@@ -10,13 +10,14 @@ import java.io.Serializable;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.CandidateSkill}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.CandidateSkill}
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class CandidateSkillDto implements Serializable {
     SkillDto skill;
     CandidateDto candidate;

@@ -1,4 +1,4 @@
-package vn.edu.iuh.fit.backend.models;
+package vn.edu.iuh.fit.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -35,7 +35,7 @@ public class Job implements Serializable {
     private Company company;
 
     @OneToMany(mappedBy = "job", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<JobSkill> applications = new ArrayList<>();
+    private List<JobSkill> jobSkills;
 
 
 }

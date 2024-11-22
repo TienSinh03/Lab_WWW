@@ -1,6 +1,5 @@
-package vn.edu.iuh.fit.backend.models;
+package vn.edu.iuh.fit.backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -41,8 +40,7 @@ public class Company extends User implements Serializable {
     private Address address;
 
     @OneToMany(mappedBy = "company")
-    @ToString.Exclude
-    private List<Job> jobs = new ArrayList<>();
+    private List<Job> jobs;
 
 
     public Company(String about, String email, String compName, String phone, String webUrl) {

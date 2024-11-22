@@ -2,7 +2,7 @@ package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.*;
 import vn.edu.iuh.fit.backend.dtos.CompanyDto;
-import vn.edu.iuh.fit.backend.models.Company;
+import vn.edu.iuh.fit.backend.entities.Company;
 /*
  * @description:
  * @author: Sinh Phan Tien

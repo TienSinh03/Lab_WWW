@@ -1,9 +1,8 @@
 package vn.edu.iuh.fit.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import vn.edu.iuh.fit.backend.models.Experience;
+import vn.edu.iuh.fit.backend.entities.Experience;
 import vn.edu.iuh.fit.backend.repositories.ExperienceRepository;
 import vn.edu.iuh.fit.backend.services.ExperienceService;
 

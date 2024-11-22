@@ -6,6 +6,7 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../static/css/admin.css"/>
+    <link rel="stylesheet" href="../static/css/main.css"/>
     <title>JobSeeker Admin - Dashboard</title>
 </head>
 <body>
@@ -17,13 +18,13 @@
             <hr>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" href="#">
+                    <a class="nav-link active text-white" th:href="@{/dashboard}">
                         <i class="bi bi-speedometer2 me-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <a class="nav-link text-white" th:href="@{/jobs}">
                         <i class="bi bi-briefcase me-2"></i>
                         Jobs
                     </a>
@@ -81,7 +82,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Total Jobs</h6>
-                            <h2 class="card-title mb-0">450</h2>
+                            <h2 class="card-title mb-0" th:text="${countJob}"></h2>
                             <small class="text-success">
                                 <i class="bi bi-arrow-up"></i>
                                 12% from last month
@@ -93,7 +94,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Active Applications</h6>
-                            <h2 class="card-title mb-0">1,257</h2>
+                            <h2 class="card-title mb-0" th:text="${countCandidate}"></h2>
                             <small class="text-success">
                                 <i class="bi bi-arrow-up"></i>
                                 8% from last month
@@ -147,69 +148,6 @@
                 </div>
             </div>
 
-            <!-- Recent Jobs Table -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Recent Jobs</h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Job Title</th>
-                                <th>Company</th>
-                                <th>Applications</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Senior Web Developer</td>
-                                <td>TechCorp Inc.</td>
-                                <td>45</td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input job-status-toggle" type="checkbox" data-job-id="1" checked>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
-                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>UX Designer</td>
-                                <td>Design Studio</td>
-                                <td>28</td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input job-status-toggle" type="checkbox" data-job-id="2" checked>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
-                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Product Manager</td>
-                                <td>Innovation Labs</td>
-                                <td>32</td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input job-status-toggle" type="checkbox" data-job-id="3">
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
-                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

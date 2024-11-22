@@ -1,10 +1,8 @@
 package vn.edu.iuh.fit.backend.services;
 
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.dtos.CompanyDto;
-import vn.edu.iuh.fit.backend.models.Candidate;
-import vn.edu.iuh.fit.backend.models.Company;
+import vn.edu.iuh.fit.backend.entities.Company;
 
 import java.util.List;
 import java.util.Optional;

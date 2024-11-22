@@ -8,13 +8,10 @@ package vn.edu.iuh.fit.backend.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import vn.edu.iuh.fit.backend.models.Company;
-import vn.edu.iuh.fit.backend.models.Job;
-import vn.edu.iuh.fit.backend.services.CompanyService;
+import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.backend.dtos.JobDto;
+import vn.edu.iuh.fit.backend.dtos.JobSkillDto;
+import vn.edu.iuh.fit.backend.dtos.PageDto;
 import vn.edu.iuh.fit.backend.services.JobServices;
 
 import java.util.List;
@@ -31,14 +28,37 @@ public class JobResources {
     private JobServices jobServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Job>> findAll() {
-        List<Job> jobs = jobServices.getAllJobs();
+    public ResponseEntity<List<JobDto>> findAll() {
+        List<JobDto> jobs = jobServices.getAllJobs();
         return ResponseEntity.ok(jobs);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Job> getOne(@PathVariable Long id) {
-        Job job = jobServices.getJobById(id);
+    public ResponseEntity<JobDto> getOne(@PathVariable Long id) {
+        JobDto job = jobServices.getJobById(id);
+        return ResponseEntity.ok(job);
+    }
+
+    @GetMapping("/company")
+    public ResponseEntity<PageDto<JobDto>> getJobByCompanyId_Panging(Long companyId, int pageNo, int pageSize) {
+        PageDto<JobDto> page = jobServices.getJobsByCompanyI_Paging(companyId, pageNo, pageSize);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/company/count")
+    public ResponseEntity<Integer> countJobByCompanyId(Long companyId) {
+        return ResponseEntity.ok(jobServices.countJobByCompanyId(companyId));
+    }
+
+    @GetMapping("/{jobId}/skills")
+    public ResponseEntity<List<JobSkillDto>> getJobSkillsByJobId(@PathVariable Long jobId) {
+        List<JobSkillDto> jobSkills = jobServices.getJobSkillsByJobId(jobId);
+        return ResponseEntity.ok(jobSkills);
+    }
+
+    @PostMapping
+    public ResponseEntity<JobDto> save(@RequestBody JobDto jobDto) {
+        JobDto job = jobServices.saveJob(jobDto);
         return ResponseEntity.ok(job);
     }
 }

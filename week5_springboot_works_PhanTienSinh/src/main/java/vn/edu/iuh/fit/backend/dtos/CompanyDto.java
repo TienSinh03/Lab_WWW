@@ -1,7 +1,6 @@
 package vn.edu.iuh.fit.backend.dtos;
 
 import lombok.*;
-import lombok.Value;
 
 import java.io.Serializable;
 /*
@@ -10,7 +9,7 @@ import java.io.Serializable;
  * @date: 11/17/2024
  */
 /**
- * DTO for {@link vn.edu.iuh.fit.backend.models.Company}
+ * DTO for {@link vn.edu.iuh.fit.backend.entities.Company}
  */
 @Getter
 @Setter
