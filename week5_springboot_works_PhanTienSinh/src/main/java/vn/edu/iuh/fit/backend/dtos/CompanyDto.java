@@ -1,6 +1,7 @@
 package vn.edu.iuh.fit.backend.dtos;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 /*
@@ -13,15 +14,16 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @ToString
-public class CompanyDto implements Serializable {
+public class CompanyDto extends UserDto implements Serializable {
     Long id;
     String about;
     String email;
     String compName;
     String phone;
     String webUrl;
-    AddressDto address;
+    AddressDto address = new AddressDto();
 }

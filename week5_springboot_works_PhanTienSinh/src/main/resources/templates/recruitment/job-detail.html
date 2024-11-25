@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../static/css/main.css"/>
+    <title>Job-Detail JobSeeker</title>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#home">JobSeeker-TS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active">Jobs</a>
+                </li>
+                <li class="nav-item">
+                    <div th:if="${userLogin} !=null" class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="ms-2" th:text="${userLogin.fullName}"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{logout}">Logout</a></li>
+                        </ul>
+                    </div>
+                    <a class="nav-link active" th:if="${userLogin} == null" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Job Detail Content -->
+<div class="container py-5">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h1 class="h2 mb-2" th:text="${job.jobName}"></h1>
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-building me-2"></i><span  th:text="${job.company.compName}"></span>
+                                <span class="mx-2">•</span>
+                                <i class="bi bi-geo-alt me-2"></i><span th:text="${job.company.address.city +', '+job.company.address.country}"></span>
+                                <span class="mx-2">•</span>
+                                <i class="bi bi-clock me-2"></i>Posted 2 days ago
+                            </p>
+                        </div>
+                        <img src="https://i.ibb.co/RhHCMcG/DALL-E-2024-11-08-12-50-20-A-professional-looking-image-representing-an-IT-company-The-image-include.webp"
+                             alt="job image"
+                             class="rounded"
+                             style="width: 100px; height: 100px; object-fit: cover;">
+                    </div>
+                    <h5 class="mb-3">Job Description</h5>
+                    <p th:text="${job.jobDesc}"></p>
+
+                    <h5 class="mb-3 mt-4">Requirements</h5>
+                    <ul class="list-unstyled" th:if="${job.jobSkills != null}" th:each="jobSkill : ${job.jobSkills}">
+                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i><span th:text="${jobSkill.skill.skillName+' - '+jobSkill.skillLevel}"></span></li>
+                    </ul>
+
+                    <h5 class="mb-3 mt-4">Benefits</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-gift text-danger me-2"></i>Competitive salary (10 - 12 trieu)</li>
+                        <li class="mb-2"><i class="bi bi-gift text-danger me-2"></i>Health, dental, and vision insurance</li>
+                        <li class="mb-2"><i class="bi bi-gift text-danger me-2"></i>401(k) matching</li>
+                        <li class="mb-2"><i class="bi bi-gift text-danger me-2"></i>Flexible working hours</li>
+                        <li class="mb-2"><i class="bi bi-gift text-danger me-2"></i>Professional development budget</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Apply Card -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Apply for this position</h5>
+                    <form id="applicationForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Resume/CV</label>
+                            <input type="file" class="form-control" accept=".pdf,.doc,.docx" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cover Letter</label>
+                            <textarea class="form-control" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Company Card -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">About <span th:text="${job.company.compName}"></span></h5>
+                    <p class="text-muted">Leading technology company specializing in innovative web solutions and digital transformation.</p>
+                    <hr>
+                    <div class="mb-2">
+                        <i class="bi bi-globe me-2"></i>
+                        <a href="#" class="text-decoration-none" th:text="${job.company.email}"></a>
+                    </div>
+                    <div class="mb-2">
+                        <i class="bi bi-people me-2"></i>
+                        100-500 employees
+                    </div>
+                    <div class="mb-2">
+                        <i class="bi bi-building me-2"></i>
+                        Technology
+                    </div>
+                    <div class="mb-3">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        <span th:text="${job.company.address.city +', '+job.company.address.country}"></span>
+                    </div>
+                    <a th:href="@{/company/{compId} (compId=${job.company.id})}" class="btn btn-outline-primary w-100">View Company Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <h5>JobSeeker</h5>
+                <p class="small">Find your dream job with our platform. Connect with top employers and opportunities.</p>
+            </div>
+            <div class="col-md-2">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">About Us</a></li>
+                    <li><a href="#" class="text-light">Contact</a></li>
+                    <li><a href="#" class="text-light">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li>Email: phansinh0402@gmail.com.com</li>
+                    <li>Phone: (555) 123-4567</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

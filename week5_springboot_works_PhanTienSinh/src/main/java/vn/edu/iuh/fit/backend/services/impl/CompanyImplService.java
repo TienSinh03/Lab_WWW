@@ -30,8 +30,8 @@ public class CompanyImplService implements CompanyService {
     }
 
     @Override
-    public Optional<Company> getById(Long id) {
-        return repo.findById(id);
+    public CompanyDto getById(Long id) {
+        return mapper.toDto(repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id)));
     }
 
     public void save(Company company) {

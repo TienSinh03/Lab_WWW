@@ -25,9 +25,6 @@ public class CompanyModels {
     @Autowired
    private RestTemplate restTemplate;
 
-    @Autowired
-    private CompanyService companyService;
-
     public CompanyDto getCompanyById(Long id) {
         return restTemplate.getForObject("http://localhost:8080/api/companies/" + id, CompanyDto.class);
     }

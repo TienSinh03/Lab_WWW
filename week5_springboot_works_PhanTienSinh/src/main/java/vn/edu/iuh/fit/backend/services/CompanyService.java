@@ -11,7 +11,7 @@ public interface CompanyService {
 
     List<CompanyDto> getAll();
 
-    Optional<Company> getById(Long id);
+    CompanyDto getById(Long id);
 
     void save(Company company);
 

@@ -74,4 +74,11 @@ public class JobModels {
         HttpEntity<JobDto> request = new HttpEntity<>(jobDto, headers);
         return restTemplate.exchange("http://localhost:8080/api/jobs", HttpMethod.POST, request, JobDto.class).getBody();
     }
+
+    public PageDto<JobDto> findJobsForCandidateWithSkillLevel(Long canId, int pageNo, int pageSize) {
+        return restTemplate.getForObject("http://localhost:8080/api/jobs/recruitment/" + canId + "/recommend"
+                        + "?pageNo=" + pageNo
+                        + "&pageSize=" + pageSize,
+                PageDto.class);
+    }
 }

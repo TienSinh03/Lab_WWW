@@ -6,10 +6,14 @@
 
 package vn.edu.iuh.fit.backend.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import vn.edu.iuh.fit.backend.dtos.JobDto;
 import vn.edu.iuh.fit.backend.dtos.JobSkillDto;
 import vn.edu.iuh.fit.backend.dtos.JobSkillIdDto;
 import vn.edu.iuh.fit.backend.dtos.PageDto;
+import vn.edu.iuh.fit.backend.entities.Job;
 
 import java.util.List;
 
@@ -28,5 +32,7 @@ public interface JobServices {
     public int countJobByCompanyId(Long companyId);
 
     public List<JobSkillDto> getJobSkillsByJobId(Long jobId);
+
+    public PageDto<JobDto> findJobsForCandidateWithSkillLevel(Long canId, int pageNo, int pageSize);
 
 }

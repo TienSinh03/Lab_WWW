@@ -36,8 +36,8 @@ public class CompanyResources {
     }
 
     @RequestMapping("/{id}")
-    public ResponseEntity<Company> getOne(@PathVariable Long id) {
-        Company company = companyService.getById(id).get();
+    public ResponseEntity<CompanyDto> getOne(@PathVariable Long id) {
+        CompanyDto company = companyService.getById(id);
         return ResponseEntity.ok(company);
     }
 }

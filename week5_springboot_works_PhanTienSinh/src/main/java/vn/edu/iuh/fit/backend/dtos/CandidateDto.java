@@ -20,11 +20,11 @@ import java.util.List;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
 @SuperBuilder
-public class CandidateDto implements Serializable {
+@ToString
+public class CandidateDto extends UserDto implements Serializable {
     Long id;
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
@@ -32,6 +32,6 @@ public class CandidateDto implements Serializable {
     String fullName;
     String phone;
     AddressDto address;
-    List<Experience> experiences = new ArrayList<>();
-    List<CandidateSkillDto> candidateSkills = new ArrayList<>();
+    List<CandidateSkillDto> candidateSkills;
+    List<ExperienceDto> experiences;
 }

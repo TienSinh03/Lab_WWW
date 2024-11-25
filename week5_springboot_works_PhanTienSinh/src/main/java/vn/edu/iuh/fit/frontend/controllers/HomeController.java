@@ -52,8 +52,8 @@ public class HomeController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session,Model model) {
-        session.invalidate();
-        return "login";
+        session.removeAttribute("userLogin");
+        return "redirect:/login";
     }
 
     @PostMapping("/do-login")
@@ -64,8 +64,8 @@ public class HomeController {
             session.setAttribute("userLogin", userDTO);
             if(userDTO.getRoles().get(0).getCode().equals("COMPANY")) {
                 return "redirect:/dashboard";
-            }else if(userDTO.getRoles().get(0).getCode().equals("USER")) {
-                return "redirect:/";
+            }else if(userDTO.getRoles().get(0).getCode().equals("CANDIDATE")) {
+                return "redirect:/recruitment/recommend-job";
             }
         }
         return "redirect:/login";
@@ -74,6 +74,7 @@ public class HomeController {
     @GetMapping("/dashboard")
     public String showFormRegister(HttpSession session,Model model) {
         UserDto user = (UserDto) session.getAttribute("userLogin");
+        System.out.println("hello"+user);
         CompanyDto company = companyModels.getCompanyById(user.getId());
         model.addAttribute("user", company);
 
@@ -88,9 +89,8 @@ public class HomeController {
     @GetMapping({"/", "/index"})
     public String showIndex(HttpSession session, Model model, @RequestParam(defaultValue = "0", required = false) Integer pageNo,
                             @RequestParam(defaultValue = "9", required = false) Integer pageSize) {
+        System.out.println(session.getAttribute("userLogin"));
         UserDto user = (UserDto) session.getAttribute("userLogin");
-
-
 
         if(user != null) {
             CandidateDto candidate = candidateModels.getCandidateById(user.getId());
@@ -115,6 +115,7 @@ public class HomeController {
 
         model.addAttribute("jobs", jobs);
         model.addAttribute("companies", companies);
+        model.addAttribute("action", null);
 
         model.addAttribute("start", start); // Gửi giá trị start của pagination
         model.addAttribute("end", end);     // Gửi giá trị end của pagination

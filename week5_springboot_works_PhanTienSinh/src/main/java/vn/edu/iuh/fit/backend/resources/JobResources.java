@@ -9,6 +9,7 @@ package vn.edu.iuh.fit.backend.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.iuh.fit.backend.dtos.CandidateDto;
 import vn.edu.iuh.fit.backend.dtos.JobDto;
 import vn.edu.iuh.fit.backend.dtos.JobSkillDto;
 import vn.edu.iuh.fit.backend.dtos.PageDto;
@@ -60,5 +61,11 @@ public class JobResources {
     public ResponseEntity<JobDto> save(@RequestBody JobDto jobDto) {
         JobDto job = jobServices.saveJob(jobDto);
         return ResponseEntity.ok(job);
+    }
+
+    @RequestMapping("/recruitment/{canId}/recommend")
+    public ResponseEntity<PageDto<JobDto>> findJobsForCandidateWithSkillLevel(@PathVariable Long canId, int pageNo, int pageSize) {
+        PageDto<JobDto> jobs = jobServices.findJobsForCandidateWithSkillLevel(canId, pageNo, pageSize);
+        return ResponseEntity.ok(jobs);
     }
 }

@@ -33,7 +33,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#profile">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" th:href="@{logout}">Logout</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </div>
                     <a class="nav-link active" th:if="${userLogin} == null" th:href="@{/login}">Login</a>
@@ -74,8 +74,19 @@
 
 <!-- Jobs Section -->
 <section class="py-5" id="jobs">
+<!--    create navbar job all and job recommendations-->
+
     <div class="container">
-        <h2 class="text-center mb-4">Jobs</h2>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a th:href="@{/}" class="nav-link active" id="home-tab" >Jobs All</a>
+            </li>
+            <li th:if="${userLogin} != null" class="nav-item" role="presentation">
+                <a th:href="@{/recruitment/recommend-job}" class="nav-link" id="profile-tab" >Jobs Recommendations</a>
+            </li>
+        </ul>
+        <h2 class="mb-4" th:if="${action == null}">Jobs Recruitment</h2>
+        <h2 class="mb-4" th:if="${action != null}">Jobs Recruitment Recommendation</h2>
         <div class="row g-4">
             <!-- Job Card 1 -->
             <div class="col-md-6 col-lg-4" th:each="job : ${jobs.values}">
@@ -88,7 +99,7 @@
                                  style="width: 50px; height: 50px; object-fit: cover; margin-right: 20px">
                             <div>
                                 <h5 class="card-title mt-3" th:text="${job.jobName}"></h5>
-                                <p class="card-text text-muted" th:text="${job.company.compName}">TechCorp Inc.</p>
+                                <p class="card-text text-muted" th:text="${job.company.compName}"></p>
                             </div>
 
                         </div>
@@ -98,7 +109,7 @@
                         </div>
                     </div>
                     <div class="card-footer bg-white">
-                        <button class="btn btn-outline-primary w-100">View Detail</button>
+                        <a th:href="@{/recruitment/job-detail/{jobId} (jobId=${job.id})}" class="btn btn-outline-primary w-100">View Detail</a>
                     </div>
                 </div>
             </div>

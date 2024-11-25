@@ -166,4 +166,19 @@ public class JobImplService implements JobServices {
         return new ArrayList<>();
     }
 
+    @Override
+    public PageDto<JobDto> findJobsForCandidateWithSkillLevel(Long canId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Job> page = jobRepository.findJobsForCandidateWithSkillLevel(canId, pageable);
+        PageDto<JobDto> pageDto = new PageDto<>();
+        if (page != null) {
+            pageDto.setPage(pageNo);
+            pageDto.setSize(pageSize);
+            pageDto.setTotal(page.getNumberOfElements());
+            pageDto.setTotalPages(page.getTotalPages());
+            pageDto.setValues(page.stream().map(jobMapper::toDto).toList());
+        }
+        return pageDto;
+    }
+
 }
