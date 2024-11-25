@@ -25,10 +25,10 @@
                     <a class="nav-link" href="#jobs">Jobs</a>
                 </li>
                 <li class="nav-item">
-                    <div th:if="${userLogin} !=null" class="dropdown">
+                    <div th:if="${user} !=null" class="dropdown">
                         <button class="btn btn-link text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle"></i>
-                            <span class="ms-2" th:text="${userLogin.fullName}"></span>
+                            <span class="ms-2" th:text="${user.fullName}"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#profile">Profile</a></li>
@@ -36,7 +36,7 @@
                             <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </div>
-                    <a class="nav-link active" th:if="${userLogin} == null" th:href="@{/login}">Login</a>
+                    <a class="nav-link active" th:if="${user} == null" th:href="@{/login}">Login</a>
                 </li>
             </ul>
         </div>
@@ -77,16 +77,18 @@
 <!--    create navbar job all and job recommendations-->
 
     <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <a th:href="@{/}" class="nav-link active" id="home-tab" >Jobs All</a>
+                <a th:href="@{/}" th:class="${action == null ? 'nav-link active': 'nav-link'}" id="home-tab" >Jobs All</a>
             </li>
-            <li th:if="${userLogin} != null" class="nav-item" role="presentation">
-                <a th:href="@{/recruitment/recommend-job}" class="nav-link" id="profile-tab" >Jobs Recommendations</a>
+            <li th:if="${user != null} " class="nav-item" role="presentation">
+                <a th:href="@{/recruitment/recommend-job}" th:class="${action != null ? 'nav-link active': 'nav-link'}" id="profile-tab" >Jobs Recommendations</a>
             </li>
         </ul>
+
         <h2 class="mb-4" th:if="${action == null}">Jobs Recruitment</h2>
         <h2 class="mb-4" th:if="${action != null}">Jobs Recruitment Recommendation</h2>
+
         <div class="row g-4">
             <!-- Job Card 1 -->
             <div class="col-md-6 col-lg-4" th:each="job : ${jobs.values}">
@@ -117,7 +119,10 @@
                 <ul class="pagination justify-content-center">
                     <!-- Previous Arrow -->
                     <li class="page-item" th:classappend="${jobs.page == 0} ? 'disabled'">
-                        <a class="page-link" th:href="@{/index(pageNo=${jobs.page - 1}, pageSize=${jobs.size})}" aria-label="Previous">
+                        <a class="page-link" th:if="${action == null}" th:href="@{/index(pageNo=${jobs.page - 1}, pageSize=${jobs.size})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a class="page-link" th:if="${action != null}" th:href="@{/recruitment/recommend-job (pageNo=${jobs.page - 1}, pageSize=${jobs.size})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -125,13 +130,17 @@
                     <!-- Pagination Items -->
                     <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
                         th:classappend="${page == jobs?.page} ? 'active'">
-                        <a class="page-link" th:href="@{/index(pageNo=${page}, pageSize=${jobs?.size})}" th:text="${page + 1}"></a>
+                        <a class="page-link" th:if="${action == null}" th:href="@{/index(pageNo=${page}, pageSize=${jobs?.size})}" th:text="${page + 1}"></a>
+                        <a class="page-link" th:if="${action != null}" th:href="@{/recruitment/recommend-job (pageNo=${page}, pageSize=${jobs?.size})}" th:text="${page + 1}"></a>
                     </li>
 
 
                     <!-- Next Arrow -->
                     <li class="page-item" th:classappend="${jobs.page == jobs.totalPages - 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/index(pageNo=${jobs.page + 1}, pageSize=${jobs.size})}" aria-label="Next">
+                        <a class="page-link" th:if="${action == null}" th:href="@{/index(pageNo=${jobs.page + 1}, pageSize=${jobs.size})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a class="page-link" th:if="${action != null}" th:href="@{/recruitment/recommend-job (pageNo=${jobs.page + 1}, pageSize=${jobs.size})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

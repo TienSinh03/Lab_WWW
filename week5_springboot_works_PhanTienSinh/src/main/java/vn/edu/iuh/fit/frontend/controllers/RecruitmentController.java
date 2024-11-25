@@ -26,7 +26,6 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/recruitment")
-@SessionAttributes("userLogin")
 public class RecruitmentController {
     @Autowired
     private CandidateModels candidateModels;
@@ -41,9 +40,9 @@ public class RecruitmentController {
 
         if(user != null) {
             CandidateDto candidate = candidateModels.getCandidateById(user.getId());
-            model.addAttribute("userLogin", candidate);
+            model.addAttribute("user", candidate);
         } else {
-            model.addAttribute("userLogin", null);
+            model.addAttribute("user", null);
         }
 
         JobDto job = jobModels.getJobById(jobId);

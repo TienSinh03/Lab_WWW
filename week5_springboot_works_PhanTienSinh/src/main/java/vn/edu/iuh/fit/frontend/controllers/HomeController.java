@@ -6,6 +6,7 @@
 
 package vn.edu.iuh.fit.frontend.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,6 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/")
-@SessionAttributes("userLogin")
 public class HomeController {
 
     @Autowired
@@ -53,14 +53,21 @@ public class HomeController {
     @GetMapping("/logout")
     public String logout(HttpSession session,Model model) {
         session.removeAttribute("userLogin");
+        session.invalidate();
+//        System.out.println("User chua xoa: " + session.getAttribute("userLogin"));
         return "redirect:/login";
     }
 
     @PostMapping("/do-login")
-    public String login(HttpSession session , @ModelAttribute("user") UserDto user) {
+    public String login(HttpServletRequest request, @ModelAttribute("user") UserDto user) {
         UserDto userDTO = userService.getUserByUsernameAndPassword(user.getUsername().trim(), user.getPassword().trim());
         System.out.println("hello"+userDTO);
         if (userDTO != null) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            session = request.getSession(true);
             session.setAttribute("userLogin", userDTO);
             if(userDTO.getRoles().get(0).getCode().equals("COMPANY")) {
                 return "redirect:/dashboard";
@@ -94,9 +101,9 @@ public class HomeController {
 
         if(user != null) {
             CandidateDto candidate = candidateModels.getCandidateById(user.getId());
-            model.addAttribute("userLogin", candidate);
+            model.addAttribute("user", candidate);
         } else {
-            model.addAttribute("userLogin", null);
+            model.addAttribute("user", null);
         }
         if(pageNo == null) {
             pageNo = 0;
