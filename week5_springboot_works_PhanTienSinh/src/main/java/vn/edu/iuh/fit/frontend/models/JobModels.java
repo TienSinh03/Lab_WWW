@@ -36,6 +36,13 @@ public class JobModels {
     @Autowired
     private RestTemplate restTemplate;
 
+    public PageDto<JobDto> getJobs( int pageNo, int pageSize) {
+        return restTemplate.getForObject("http://localhost:8080/api/jobs"
+                        + "?pageNo=" + pageNo
+                        + "&pageSize=" + pageSize,
+                PageDto.class);
+    }
+
     public PageDto<JobDto> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize) {
         return restTemplate.getForObject("http://localhost:8080/api/jobs/company?companyId=" + companyId
                 + "&pageNo=" + pageNo

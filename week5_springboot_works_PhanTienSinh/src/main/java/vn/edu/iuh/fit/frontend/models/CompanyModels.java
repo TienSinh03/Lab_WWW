@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import vn.edu.iuh.fit.backend.dtos.CompanyDto;
 import vn.edu.iuh.fit.backend.services.CompanyService;
 
+import java.util.List;
+
 /*
  * @description:
  * @author: Sinh Phan Tien
@@ -28,5 +30,9 @@ public class CompanyModels {
 
     public CompanyDto getCompanyById(Long id) {
         return restTemplate.getForObject("http://localhost:8080/api/companies/" + id, CompanyDto.class);
+    }
+
+    public List<CompanyDto> getCompanies() {
+        return restTemplate.getForObject("http://localhost:8080/api/companies", List.class);
     }
 }

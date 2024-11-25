@@ -59,8 +59,18 @@ public class JobImplService implements JobServices {
 
 
     @Override
-    public List<JobDto> getAllJobs() {
-        return jobRepository.findAll().stream().map(jobMapper::toDto).toList();
+    public PageDto<JobDto> getAllJobs(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Job> page = jobRepository.findAll(pageable);
+        PageDto<JobDto> pageDto = new PageDto<>();
+        if (page != null) {
+            pageDto.setPage(pageNo);
+            pageDto.setSize(pageSize);
+            pageDto.setTotal(page.getNumberOfElements());
+            pageDto.setTotalPages(page.getTotalPages());
+            pageDto.setValues(page.stream().map(jobMapper::toDto).toList());
+        }
+        return pageDto;
     }
 
     @Override

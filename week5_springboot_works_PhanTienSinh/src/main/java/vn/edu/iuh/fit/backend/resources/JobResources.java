@@ -28,8 +28,8 @@ public class JobResources {
     private JobServices jobServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<JobDto>> findAll() {
-        List<JobDto> jobs = jobServices.getAllJobs();
+    public ResponseEntity<PageDto<JobDto>> getJobs(int pageNo, int pageSize) {
+        PageDto<JobDto> jobs = jobServices.getAllJobs(pageNo, pageSize);
         return ResponseEntity.ok(jobs);
     }
 

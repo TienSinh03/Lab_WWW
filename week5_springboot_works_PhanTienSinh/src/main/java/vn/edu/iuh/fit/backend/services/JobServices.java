@@ -19,7 +19,7 @@ import java.util.List;
  * @date: 11/8/2024
  */
 public interface JobServices {
-    public List<JobDto> getAllJobs();
+    public PageDto<JobDto> getAllJobs(int pageNo, int pageSize);
     public PageDto<JobDto> getJobsByCompanyI_Paging(Long companyId, int pageNo, int pageSize);
     public List<JobDto> getJobsByCompanyIda(Long companyId);
     public JobDto getJobById(Long id);

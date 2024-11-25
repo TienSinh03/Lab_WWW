@@ -29,7 +29,7 @@ public class CompanyResources {
     private CompanyService companyService;
 
 
-    @RequestMapping("/all")
+    @RequestMapping("")
     public ResponseEntity<List<CompanyDto>> findAll() {
         List<CompanyDto> companies = companyService.getAll();
         return ResponseEntity.ok(companies);
