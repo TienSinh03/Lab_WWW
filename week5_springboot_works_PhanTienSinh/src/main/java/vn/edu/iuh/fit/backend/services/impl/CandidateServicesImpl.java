@@ -67,4 +67,19 @@ public class CandidateServicesImpl implements CandidateServices {
     public Integer countCandidates() {
         return (int) candidateRepository.count();
     }
+
+    @Override
+    public PageDto<CandidateDto> findCandidatesForJobWithSkillLevel(Long jobId, int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        Page<Candidate> candidate = candidateRepository.findCandidatesForJobWithSkillLevel(jobId, pageRequest);
+        PageDto<CandidateDto> pageDto = new PageDto<>();
+        if (candidate != null) {
+            pageDto.setPage(pageNo);
+            pageDto.setSize(pageSize);
+            pageDto.setTotal(candidate.getNumberOfElements());
+            pageDto.setTotalPages(candidate.getTotalPages());
+            pageDto.setValues(candidate.stream().map(candidateMapper::toDto).toList());
+        }
+        return pageDto;
+    }
 }

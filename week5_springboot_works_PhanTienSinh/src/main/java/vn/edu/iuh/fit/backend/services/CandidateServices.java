@@ -26,4 +26,5 @@ public interface CandidateServices {
     public CandidateDto getCandidate(Long id);
 
     public Integer countCandidates();
+    public PageDto<CandidateDto> findCandidatesForJobWithSkillLevel(Long jobId, int pageNo, int pageSize);
 }

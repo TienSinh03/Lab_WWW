@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.iuh.fit.backend.dtos.CandidateDto;
 import vn.edu.iuh.fit.backend.dtos.PageDto;
+import vn.edu.iuh.fit.backend.entities.Candidate;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
 
 /*
@@ -36,5 +37,11 @@ public class CandidateResources {
     public ResponseEntity<CandidateDto> findById(@PathVariable Long id) {
         CandidateDto candidate = candidateServices.getCandidate(id);
         return ResponseEntity.ok(candidate);
+    }
+
+    @RequestMapping("/job/{jobId}")
+    public ResponseEntity<PageDto<CandidateDto>> findCandidatesForJobWithSkillLevel(@PathVariable Long jobId, int pageNo, int pageSize) {
+        PageDto<CandidateDto> candidates = candidateServices.findCandidatesForJobWithSkillLevel(jobId, pageNo, pageSize);
+        return ResponseEntity.ok(candidates);
     }
 }

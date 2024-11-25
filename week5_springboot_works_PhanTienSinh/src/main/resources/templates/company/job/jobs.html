@@ -46,12 +46,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" th:href="@{/candidates}">
-                        <i class="bi bi-file-text me-2"></i>
-                        Applications
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link text-white" href="users.html">
                         <i class="bi bi-people me-2"></i>
                         Users
@@ -129,7 +123,7 @@
                             </thead>
                             <tbody id="jobShowModal">
                             <tr th:each = "job, iStat : ${jobs.values}">
-                                <td id="id-job" th:text="${job.id}" hidden="hidden"></td>
+                                <td hidden="hidden" th:text="${job.id}" id="id-job"></td>
                                 <td hidden="hidden" th:text="${company.address}" id="address"></td>
 
                                 <td th:text="${job.jobName}"></td>
@@ -197,6 +191,11 @@
 
                 <h3>Required Skills:</h3>
                 <ul id="modalJobSkill" class="list-unstyled"></ul>
+
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-sm btn-outline-success viewNominee">Applications</a>
             </div>
         </div>
     </div>
@@ -204,12 +203,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.querySelectorAll('#jobShowModal').forEach(row => {
+    document.querySelectorAll('#jobShowModal tr').forEach(row => {
         row.addEventListener('click', async function () {
+
+            //get table row id
             const jobId = row.querySelector('#id-job').textContent;
+            console.log(jobId)
 
             const response = await fetch(`http://localhost:8080/api/jobs/${jobId}`);
             const data = await response.json();
+
 
             const address = data.company.address;
             document.getElementById('modalJobName').innerText = data.jobName;
@@ -226,6 +229,10 @@
                 li.innerHTML = `<i class="bi bi-check2-circle text-success me-2"> </i> ${skill.skill.skillName} - ${skill.skillLevel}`;
                 skills.appendChild(li);
             })
+
+
+            const viewNominee = document.querySelector('.modal-footer .viewNominee');
+            viewNominee.href = `/candidates/job/${jobId}`;
 
             const modal = new bootstrap.Modal(document.getElementById('jobModal'));
             modal.show();

@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import vn.edu.iuh.fit.backend.entities.CandidateSkill;
@@ -25,6 +26,7 @@ import java.util.List;
 @SuperBuilder
 public class CandidateDto implements Serializable {
     Long id;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
     String email;
     String fullName;

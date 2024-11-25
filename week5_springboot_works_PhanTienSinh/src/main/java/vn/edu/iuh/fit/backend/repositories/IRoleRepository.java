@@ -16,5 +16,5 @@ import vn.edu.iuh.fit.backend.entities.Role;
  */
 public interface IRoleRepository extends CrudRepository<Role, Long> {
 
-//    public Role findByU
+
 }

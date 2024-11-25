@@ -39,4 +39,11 @@ public class CandidateModels {
     public Integer countCandidates() {
         return candidateServices.countCandidates();
     }
+
+    public PageDto<CandidateDto> findCandidatesForJobWithSkillLevel(Long jobId, int pageNo, int pageSize) {
+        return restTemplate.getForObject("http://localhost:8080/api/candidates/job/"+jobId
+                        +  "?pageNo=" + pageNo
+                        + "&pageSize=" + pageSize,
+                PageDto.class);
+    }
 }

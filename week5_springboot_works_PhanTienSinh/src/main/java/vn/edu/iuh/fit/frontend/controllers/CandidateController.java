@@ -8,21 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import vn.edu.iuh.fit.backend.dtos.CandidateDto;
-import vn.edu.iuh.fit.backend.dtos.PageDto;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import vn.edu.iuh.fit.backend.dtos.*;
 import vn.edu.iuh.fit.backend.entities.*;
 import vn.edu.iuh.fit.backend.repositories.IAddressRepository;
 import vn.edu.iuh.fit.backend.repositories.ICandidateRepository;
-import vn.edu.iuh.fit.backend.services.CandidateServices;
-import vn.edu.iuh.fit.backend.services.CandidateSkillService;
-import vn.edu.iuh.fit.backend.services.ExperienceService;
-import vn.edu.iuh.fit.backend.services.SkillService;
+import vn.edu.iuh.fit.backend.services.*;
 import vn.edu.iuh.fit.frontend.models.CandidateModels;
+import vn.edu.iuh.fit.frontend.models.CompanyModels;
+import vn.edu.iuh.fit.frontend.models.JobModels;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
@@ -32,6 +32,12 @@ public class CandidateController {
 
     @Autowired
     private CandidateModels candidateModels;
+
+    @Autowired
+    private JobModels jobModels;
+
+    @Autowired
+    private CompanyModels companyModels;
 
     @Autowired
     private CandidateServices candidateServices;
@@ -51,6 +57,10 @@ public class CandidateController {
     @Autowired
     private ExperienceService experienceService;
 
+    @Autowired
+    private EmailService emailService;
+
+
     @GetMapping("/list")
     public String showCandidateList(Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
@@ -60,6 +70,11 @@ public class CandidateController {
     @GetMapping("")
     public String showCandidateListPaging(HttpSession session, Model model, @RequestParam( defaultValue = "0",required = false)Integer pageNo,
                                           @RequestParam(defaultValue="10",required = false) Integer pageSize) {
+
+        UserDto user = session.getAttribute("userLogin") != null ? (UserDto) session.getAttribute("userLogin") : null;
+        CompanyDto companyDto = companyModels.getCompanyById(user.getId());
+        PageDto<JobDto> jobPage = jobModels.getJobsByCompanyI_Paging(user.getId(), pageNo, pageSize);
+
 
         if(pageNo == null) {
             pageNo = 0;
@@ -71,6 +86,7 @@ public class CandidateController {
 
         PageDto<CandidateDto> candidatePage = candidateModels.getCandidates(pageNo, pageSize); // get the page of candidates
         model.addAttribute("candidatePage", candidatePage);
+        model.addAttribute("jobs", jobPage);
 
         return "candidates/candidates-paging";
     }
@@ -149,5 +165,58 @@ public class CandidateController {
         Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid candidate Id:" + id));
         candidateRepository.delete(candidate);
         return "redirect:/candidates/list_paging";
+    }
+
+
+    @GetMapping("/job/{jobId}")
+    public String showNominee(HttpSession session,Model model, @PathVariable String jobId, @RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "5") Integer pageSize) {
+        System.out.println(jobId);
+        Long id = Long.parseLong(jobId);
+        if(pageNo == null) {
+            pageNo = 0;
+        }
+
+        if(pageSize == null) {
+            pageSize = 5;
+        }
+        PageDto<CandidateDto> candidatePage = candidateModels.findCandidatesForJobWithSkillLevel(id, pageNo, pageSize);
+        model.addAttribute("candidatePage", candidatePage);
+        model.addAttribute("message", null);
+        session.setAttribute("job", jobModels.getJobById(id));
+        System.out.println(jobModels.getJobById(id));
+        return "candidates/candidates-paging";
+    }
+
+    @GetMapping("/send-email/{candidateId}")
+    public String searchCandidate(HttpSession session, Model model, RedirectAttributes redirectAttributes, @PathVariable String candidateId) {
+        UserDto user = session.getAttribute("userLogin") != null ? (UserDto) session.getAttribute("userLogin") : null;
+        CompanyDto companyDto = companyModels.getCompanyById(user.getId());
+
+        Long id = Long.parseLong(candidateId);
+        CandidateDto candidate = candidateModels.getCandidateById(id);
+
+        JobDto job = (JobDto) session.getAttribute("job");
+        if (candidate == null) {
+            redirectAttributes.addFlashAttribute("message", "Failed to send the email.");
+        } else {
+            String toEmail = candidate.getEmail();
+            String subject = "Job Invitation for " + job.getJobName();
+            String body = "Dear " + candidate.getFullName() + ",\n\n" +
+                    "We are excited to invite you to apply for the position of " + job.getJobName() + " at our company. " +
+                    "This role requires the following skills: " + job.getJobSkills().stream()
+                    .map(skill -> skill.getSkill().getSkillName())
+                    .collect(Collectors.joining(", ")) + ".\n\n" +
+                    "Please let us know if you're interested. \nContact to our phone: " +companyDto.getPhone()+", or email: "+companyDto.getEmail()
+                    +"\n\nBest regards,\n" + companyDto.getCompName();
+
+            emailService.sendInvitationToCandidate(toEmail, subject, body);
+
+            redirectAttributes.addFlashAttribute("message", "Email has been sent successfully!");
+        }
+
+        String jobId = job.getId().toString();
+        return "redirect:/candidates/job/"+jobId;
+
     }
 }

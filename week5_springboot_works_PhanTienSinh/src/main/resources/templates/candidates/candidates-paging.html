@@ -41,15 +41,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  text-white" th:href="@{/jobs}">
+                    <a class="nav-link active text-white" th:href="@{/jobs}">
                         <i class="bi bi-briefcase me-2"></i>
                         Jobs
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active text-white" th:href="@{/candidates}">
-                        <i class="bi bi-file-text me-2"></i>
-                        Applications
                     </a>
                 </li>
                 <li class="nav-item">
@@ -82,22 +76,17 @@
             <!-- Filters -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="row g-3">
-                        <select class="form-select">
-                            <option value="">All Jobs</option>
-                            <option value="1">Senior Web Developer</option>
-                            <option value="2">UX Designer</option>
-                            <option value="3">Product Manager</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="Search applications...">
-                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-outline-secondary w-100" id="filterCandidate">
-                            <i class="bi bi-funnel"></i> Filter
-                        </button>
-                    </div>
+                    <form class="row g-3"  th:action="@{/candidates/search}">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="contentSearch" placeholder="Search applications...">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-secondary w-100" type="submit" id="filterCandidate">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 
@@ -116,9 +105,10 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody th:if="candidatePage.values != null">
                                 <!-- iStat là một iteration status giúp cung cấp thông tin về vòng lặp (ví dụ: là số lẻ hay số chẵn, chỉ số vòng lặp).-->
                                 <tr th:each="candidate, iStat : ${candidatePage.values}">
+                                    <input type="hidden" th:value="${candidate.id}" id="candidateId">
                                     <td >
                                         <div class="d-flex align-items-center">
                                             <img src="https://via.placeholder.com/40" class="rounded-circle me-2">
@@ -130,17 +120,22 @@
                                     </td>
 
                                     <!-- Skill-->
-                                    <td th:text="'teamwork'"></td>
+                                    <td>
+                                        <div class="d-flex flex-wrap">
+                                            <span class="badge me-2 mb-2 bg-primary" th:each="skill: ${candidate.candidateSkills}"
+                                                  th:text="${skill.skill.skillName}"></span>
+                                        </div>
+                                    </td>
                                     <td th:text="${candidate.address.city}"></td>
                                     <td> <span class="badge bg-warning">Pending</span></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary me-3">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary me-3" data-bs-toggle="modal" data-bs-target="#candidateModal">View</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-success application-action" data-action="shortlist" data-application-id="1">
-                                            Shortlist
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger application-action" data-action="reject" data-application-id="1">
+                                        <a th:href="@{/candidates/send-email/{candidateId} (candidateId=${candidate.id})}" class="btn btn-sm btn-outline-success application-action" >
+                                            Send Email
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger application-action" >
                                             Reject
                                         </button>
                                     </td>
@@ -156,6 +151,8 @@
                                 </li>
                             </ul>
                         </nav>
+                        <div th:if="${message}" class="alert alert-info" role="alert" th:text="${message}"></div>
+
                     </div>
                 </div>
             </div>
@@ -163,17 +160,7 @@
         </div>
    </div>
 </div>
-<!-- Chỉ hiển thị phần điều hướng phân trang nếu tổng số trang lớn hơn 0.
-     Nếu pageNumber khớp với trang hiện tại (candidatePage.number + 1 vì candidatePage.number bắt đầu từ 0),
--->
-<div class="inline" th:if="${candidatePage.getTotalPages() > 0}" th:each="pageNumber : ${pageNumbers}">
 
-<!--  Có dạng http://localhost:8080/candidates?size=10&page=2  -->
-    <a th:href = "@{/candidates/list_paging(size=${candidatePage.size}, page=${pageNumber})}"
-       th:text="${pageNumber}"
-       th:class="${pageNumber == candidatePage.number + 1} ? active"
-    ></a>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="candidateModal" tabindex="-1" aria-labelledby="candidateModalLabel" aria-hidden="true">
@@ -184,7 +171,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><strong>ID:</strong> <span id="modalCandidateId"></span></p>
                 <p><strong>Full Name:</strong> <span id="modalCandidateFullName"></span></p>
                 <p><strong>DOB:</strong> <span id="modalCandidateDOB"></span></p>
                 <p><strong>Address:</strong> <span id="modalCandidateAddress"></span></p>
@@ -211,13 +197,16 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-sm btn-outline-success sendEmail">Send Email</a>
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script th:if="${message != null}">
+    alert([[${message}]]);
+</script>
 <script>
 
     const rows = document.querySelectorAll('#data-table tbody tr');
@@ -225,15 +214,14 @@
 
     rows.forEach(row => {
         row.addEventListener('click', async function () {
-            const candidateId = this.cells[0].innerText;
+            const candidateId = row.querySelector('#candidateId').value;
 
             const response = await fetch(`http://localhost:8080/api/candidates/${candidateId}`);
             const data = await response.json();
 
-            document.getElementById('modalCandidateId').innerText = data.id;
             document.getElementById('modalCandidateFullName').innerText = data.fullName;
             document.getElementById('modalCandidateDOB').innerText = data.dob;
-            document.getElementById('modalCandidateAddress').innerText ='Number '+data.address.number+', '+ data.address.street + ' street, '+ data.address.city+ ' city, '+ data.address.zipcode+ ', '+ data.address.country;
+            document.getElementById('modalCandidateAddress').innerText =data.address.street + ', ' + data.address.city+ ', ' + data.address.country + ', ' + data.address.zipcode;
             document.getElementById('modalCandidatePhone').innerText = data.phone;
             document.getElementById('modalCandidateEmail').innerText = data.email;
 
@@ -241,7 +229,7 @@
             skills.innerHTML = '';
             data.candidateSkills.forEach(skill => {
                 const li = document.createElement('li');
-                li.innerText = skill.skill.skill_name + ' - ' + skill.skill_level;
+                li.innerText = skill.skill.skillName + ' - ' + skill.skillLevel;
                 skills.appendChild(li);
             });
 
@@ -258,6 +246,12 @@
                 `;
                 experiences.appendChild(tr);
             });
+
+
+            //send email
+            const sendEmail = document.querySelector('.modal-footer .sendEmail');
+            sendEmail.href = `/candidates/send-email/${candidateId}`;
+
 
             const modal = new bootstrap.Modal(document.getElementById('candidateModal'));
             modal.show();

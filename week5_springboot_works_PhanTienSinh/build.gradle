@@ -46,6 +46,9 @@ dependencies {
     implementation 'org.springframework.session:spring-session-core'
 
     implementation 'org.mindrot:jbcrypt:0.4'
+
+    //mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
