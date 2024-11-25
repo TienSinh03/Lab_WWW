@@ -18,6 +18,7 @@ import vn.edu.iuh.fit.frontend.models.CompanyModels;
 import vn.edu.iuh.fit.frontend.models.JobModels;
 
 import java.util.List;
+import java.util.Objects;
 
 /*
  * @description:
@@ -37,15 +38,31 @@ public class RecruitmentController {
     @GetMapping("/job-detail/{jobId}")
     public String showJobDetail(HttpSession session, Model model, @PathVariable(required = false) Long jobId) {
         UserDto user = (UserDto) session.getAttribute("userLogin");
+        JobDto job = jobModels.getJobById(jobId);
 
         if(user != null) {
             CandidateDto candidate = candidateModels.getCandidateById(user.getId());
+
+            // skills lack
+            List<JobSkillDto> skillsOfJob = job.getJobSkills();
+            List<JobSkillDto> skillsOfJobLack = skillsOfJob.stream()
+                    .map((value) -> {
+                        for(CandidateSkillDto skill : candidate.getCandidateSkills()) {
+                            if(skill.getSkill().getId().equals(value.getSkill().getId())) { // Nếu có skill candidate trong job thi return null
+                                return null;
+                            }
+                        }
+                        return value; // Nếu không có skill candidate trong job thì return skill đó
+                    }).filter(Objects::nonNull).toList();
+
             model.addAttribute("user", candidate);
+            model.addAttribute("skillsOfJobLack", skillsOfJobLack);
         } else {
             model.addAttribute("user", null);
         }
 
-        JobDto job = jobModels.getJobById(jobId);
+
+
         model.addAttribute("job", job);
         return "recruitment/job-detail";
     }
