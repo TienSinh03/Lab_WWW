@@ -11,6 +11,10 @@
 ## Cách sử dụng
 Khi ứng dụng đang chạy, bạn có thể truy cập giao diện web bằng cách điều hướng đến `http://localhost:8080` trong trình duyệt web của bạn.  
 
+## Diagram
+
+![Screenshot 2024-11-26 204805](https://github.com/user-attachments/assets/75081f19-dfce-44d4-ba6f-8407ca29415d)
+
 ## Lưu ý
 - Cài đặt dependency email
   ```
@@ -53,6 +57,8 @@ Khi ứng dụng đang chạy, bạn có thể truy cập giao diện web bằng
 ![login](https://github.com/user-attachments/assets/6048f562-bc09-4adb-a270-d914e3eec0b8)
 
 ### 3. Cho phép công ty đăng tin tuyển người với các skill mong muốn
+
+![addJob](https://github.com/user-attachments/assets/7a0cf199-28b4-4f84-8b7e-1dc3f06b9ac2)
 
 ### 4. Các ứng viên khi log vào sẽ được gợi ý các công việc có skill phù hợp với mình
 
