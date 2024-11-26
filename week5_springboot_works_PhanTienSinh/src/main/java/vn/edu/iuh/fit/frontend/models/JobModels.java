@@ -68,11 +68,19 @@ public class JobModels {
     }
 
     public JobDto saveaJob(JobDto jobDto) {
+        System.out.println("job model "+jobDto);
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-
         HttpEntity<JobDto> request = new HttpEntity<>(jobDto, headers);
-        return restTemplate.exchange("http://localhost:8080/api/jobs", HttpMethod.POST, request, JobDto.class).getBody();
+
+        ResponseEntity<JobDto> response = restTemplate.exchange(
+                "http://localhost:8080/api/jobs",
+                HttpMethod.POST,
+                request,
+                JobDto.class);
+
+        return response.getBody();
     }
 
     public PageDto<JobDto> findJobsForCandidateWithSkillLevel(Long canId, int pageNo, int pageSize) {

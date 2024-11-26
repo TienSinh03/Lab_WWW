@@ -12,9 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @ToString
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "job")
 public class Job implements Serializable {
     @Id
@@ -30,12 +28,21 @@ public class Job implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "com_id")
-    @JsonIgnore
-    @ToString.Exclude
     private Company company;
 
-    @OneToMany(mappedBy = "job", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "job", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<JobSkill> jobSkills;
 
+    public Job(Long id, String jobDesc, String jobName, Company company) {
+        this.id = id;
+        this.jobDesc = jobDesc;
+        this.jobName = jobName;
+        this.company = company;
+    }
 
+    public Job(String jobDesc, String jobName, Company company) {
+        this.jobDesc = jobDesc;
+        this.jobName = jobName;
+        this.company = company;
+    }
 }

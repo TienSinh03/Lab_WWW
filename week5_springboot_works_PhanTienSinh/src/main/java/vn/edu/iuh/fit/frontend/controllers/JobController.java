@@ -98,11 +98,12 @@ public class JobController {
         if (jobId !=null) {
             jobDto = jobModels.getJobById(jobId);
         } else {
+            jobDto = new JobDto();
+            jobDto.setCompany(companyDto);
+
             List<JobSkillDto> jobSkills = new ArrayList<>();
             jobSkills.add(new JobSkillDto());
 
-            jobDto = new JobDto();
-            jobDto.setCompany(companyDto);
             jobDto.setJobSkills(jobSkills);
         }
 
@@ -128,7 +129,8 @@ public class JobController {
     }
 
     @PostMapping("/save")
-    public String saveJob(HttpSession session, @ModelAttribute JobDto jobDto) {
+    public String saveJob(HttpSession session, @ModelAttribute("job")  JobDto jobDto) {
+        System.out.println(jobDto.toString());
         jobModels.saveaJob(jobDto);
         return "redirect:/jobs";
     }

@@ -25,6 +25,7 @@ public class JobSkill {
     @MapsId("jobId")
     @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "job_id", nullable = false)
+    @ToString.Exclude
     private Job job;
 
     @MapsId("skillId")

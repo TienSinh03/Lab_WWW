@@ -25,6 +25,7 @@ import vn.edu.iuh.fit.backend.repositories.JobSkillRepository;
 import vn.edu.iuh.fit.backend.services.JobServices;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -102,13 +103,16 @@ public class JobImplService implements JobServices {
     @Override
     public JobDto saveJob(JobDto jobDto) {
         Job job = jobMapper.toEntity(jobDto);
-        if (jobDto.getCompany() != null && jobDto.getCompany().getId() != null) {
-            Company company = companyRepository.findById(jobDto.getCompany().getId())
-                    .orElseThrow(() -> new RuntimeException("Company not found"));
-            job.setCompany(company);
-        }
 
-        jobRepository.save(job);
+        if (jobDto.getCompany().getId() == null) {
+            return null;
+        }
+        Company company = companyRepository.findById(jobDto.getCompany().getId())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+        job.setCompany(company);
+
+        job.setJobSkills(Collections.emptyList());
+        Job jobAdd = jobRepository.save(job);
 
         if (jobDto.getJobSkills() != null) {
             List<JobSkill> jobSkills = new ArrayList<>();
@@ -128,23 +132,25 @@ public class JobImplService implements JobServices {
                     skillRepository.save(skill);
                 }
 
+                // create job skill
                 JobSkill jobSkill = jobSkillMapper.toEntity(jobSkillDTO);
+                jobSkill.setSkill(skill);
+                jobSkill.setJob(jobAdd);
 
-                // create job skill id
-                JobSkillId jobSkillId = new JobSkillId();
-                jobSkillId.setJobId(job.getId());
-                jobSkillId.setSkillId(skill.getId());
+                    // create job skill id
+                    JobSkillId jobSkillId = new JobSkillId();
+                    jobSkillId.setJobId(jobAdd.getId());
+                    jobSkillId.setSkillId(skill.getId());
 
                 jobSkill.setId(jobSkillId);
-                jobSkill.setSkill(skill);
-                jobSkill.setJob(job);
 
                 jobSkillRepository.save(jobSkill);
                 jobSkills.add(jobSkill);
             });
-            job.setJobSkills(jobSkills);
+            jobAdd.setJobSkills(jobSkills);
         }
-        return jobMapper.toDto(jobRepository.save(job));
+        System.out.println("job service"+jobAdd);
+        return jobMapper.toDto(jobRepository.save(jobAdd));
 
 
     }

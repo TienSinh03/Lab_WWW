@@ -40,6 +40,7 @@ public class Company extends User implements Serializable {
     private Address address;
 
     @OneToMany(mappedBy = "company")
+    @ToString.Exclude
     private List<Job> jobs;
 
 

@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <form th:object="${job}" th:action ="@{/jobs/save}" method="post">
                         <div class="row g-3">
-                            <input type="hidden" th:field="*{id}">
+                            <input th:if="${job.id != null}" type="hidden" th:field="*{id}">
                             <input type="hidden" th:field="*{company.id}">
 <!--                            <div class="col-md-6">-->
 <!--                                <label class="form-label">Company</label>-->

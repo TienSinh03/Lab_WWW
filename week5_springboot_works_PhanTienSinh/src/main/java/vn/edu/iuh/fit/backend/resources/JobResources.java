@@ -59,6 +59,7 @@ public class JobResources {
 
     @PostMapping
     public ResponseEntity<JobDto> save(@RequestBody JobDto jobDto) {
+        System.out.println("job resource: "+jobDto);
         JobDto job = jobServices.saveJob(jobDto);
         return ResponseEntity.ok(job);
     }
