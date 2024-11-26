@@ -11,36 +11,61 @@
 ## Cách sử dụng
 Khi ứng dụng đang chạy, bạn có thể truy cập giao diện web bằng cách điều hướng đến `http://localhost:8080` trong trình duyệt web của bạn.  
 
+## Lưu ý
+- Cài đặt dependency email
+  ```
+  implementation 'org.springframework.boot:spring-boot-starter-mail'
+  ```
+  
+- Thiết lập `resources/application.properties`
+
+   ```
+    spring.application.name=week5_springboot_jobseeking
+    spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+    spring.datasource.url=jdbc:mariadb://localhost:3306/works_detai_www
+    spring.datasource.username=root
+    spring.datasource.password=<your_password>
+   
+    spring.jpa.show-sql=true
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.generate-ddl=true
+
+    // config jackson
+    spring.jackson.serialization.write-dates-as-timestamps=false
+    spring.jackson.default-property-inclusion=NON_NULL
+
+    // config email
+    spring.mail.host=smtp.gmail.com
+    spring.mail.port=587
+    spring.mail.username=<your email>
+    spring.mail.password=<your passowrd>
+    spring.mail.properties.mail.smtp.auth=true
+    spring.mail.properties.mail.smtp.starttls.enable=true   
+   ```
+
 ## Minh chứng 
-<h3> API candidate </h3>
+### 1. Truy cập trang chủ với đường link: `http://localhost:8080`
+   
+ ![Screenshot 2024-11-26 210544](https://github.com/user-attachments/assets/5fd020e3-5589-4eb4-829a-6b3f7ce1315a)
+  
+### 2. Login được phân quyền bởi role candidate và company
+    
+![login](https://github.com/user-attachments/assets/6048f562-bc09-4adb-a270-d914e3eec0b8)
 
-> Link api: (http://localhost:8080/api/companies/all)
+### 3. Cho phép công ty đăng tin tuyển người với các skill mong muốn
+
+### 4. Các ứng viên khi log vào sẽ được gợi ý các công việc có skill phù hợp với mình
+
+![Screenshot 2024-11-26 211403](https://github.com/user-attachments/assets/61adb323-d79d-44cb-9d1a-8f031d4363df)
+
+### 5. Giúp các công ty tìm các ứng viên có skill phù hợp rồi gửi mail mời.
+
+![sendemail](https://github.com/user-attachments/assets/dc7680a8-b0bf-4dc1-87fd-5004ded6f2ed)
+
+### 6. Đề xuất một số skill mà ứng viên chưa có để học. 
+
+![Screenshot 2024-11-26 212155](https://github.com/user-attachments/assets/c39d3d2c-f23b-477b-87b2-4563567ba83f)
 
 
-![Screenshot 2024-11-08 024747](https://github.com/user-attachments/assets/d1d3db2d-683c-491a-94b8-1fb0edf8b000)
 
-<h3> LOAD DỮ LIỆU KHÔNG PHÂN TRANG  </h3>
 
-![Screenshot 2024-11-03 174854](https://github.com/user-attachments/assets/ce0b7038-c6e9-4fc7-8915-9b4332b89162)
-<br/>
-<h3> LOAD DỮ LIỆU CÓ PHÂN TRANG  </h3>
-
-![Screenshot 2024-11-03 175446](https://github.com/user-attachments/assets/8a95e3b9-6b21-4dbf-ab44-381777e43446)
-<br/>
-<h3> ADD Candidate  </h3>
-
-![Screenshot 2024-11-08 024822](https://github.com/user-attachments/assets/d6da489f-2cc5-4c68-a130-ba4cf88a30da)
-
-<br/>
-<h3> UPDATE Candidate  </h3>
-
-![2024-11-0611-17-29-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/edaa909e-27c6-4c4b-baca-14b2c06be94f)
-<br/>
-<h3> DELETE Candidate  </h3>
-
-![2024-11-0611-19-43-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/23ffaaf4-74ad-4737-a2d3-556cdb345b92)
-
-<br/>
-<h3> Detail Candidate </h3>
-
-![Screenshot 2024-11-08 024807](https://github.com/user-attachments/assets/b3b64d77-a0ef-4f6f-9d76-7532ef20fadb)
