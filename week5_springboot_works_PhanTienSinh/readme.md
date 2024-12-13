@@ -1,5 +1,12 @@
 # Week-5
 
+## Thông tin cá nhân
+#### **Họ tên**: Phan Tiên Sinh  
+#### **Mã sinh viên**: 21010761  
+#### **Giảng viên hướng dẫn**: Võ Văn Hải
+#### **Trường**: Đại học Công nghiệp TP Hồ Chí Minh - IUH  
+#### **Link Google Drive (Chứa file báo cáo và file presentation)**: [Tại đây](https://drive.google.com/drive/folders/1JBw1EVJH4k0W84j3jVa14SuRwa7AXFpL?usp=sharing)
+
 ## Mô tả dự án
 Ứng dụng này là một cổng thông tin việc làm nơi các công ty có thể đăng tuyển dụng và ứng viên có thể nộp đơn xin việc. Nó bao gồm các tính năng như đăng tuyển, quản lý hồ sơ ứng viên, xin việc và giới thiệu công việc dựa trên kỹ năng của ứng viên.
 
