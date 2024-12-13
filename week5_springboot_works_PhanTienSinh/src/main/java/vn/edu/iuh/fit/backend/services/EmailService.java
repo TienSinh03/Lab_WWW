@@ -13,4 +13,6 @@ package vn.edu.iuh.fit.backend.services;
  */
 public interface EmailService {
     public void sendInvitationToCandidate(String toEmail, String subject, String body);
+    public void sendEmailApply(String toEmail, String subject, String body);
+
 }

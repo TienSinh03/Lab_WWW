@@ -31,4 +31,20 @@ public class EmailServiceImpl implements EmailService {
         message.setText(body);
         javaMailSender.send(message);
     }
+
+    @Override
+    public void sendEmailApply(String toEmail, String subject, String body) {
+        // Tao email
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(toEmail); // Email nguoi gui
+        message.setTo("phansinh0606@gmail.com"); // Email nguoi nhan
+        message.setSubject(subject); // Tieu de email
+        message.setText(body); // Noi dung email
+
+        //Dat replyTo de admin co the reply email
+        message.setReplyTo(toEmail);
+
+        // Gui email
+        javaMailSender.send(message);
+    }
 }

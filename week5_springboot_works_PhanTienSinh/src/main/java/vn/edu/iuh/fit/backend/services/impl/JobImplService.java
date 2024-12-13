@@ -151,8 +151,6 @@ public class JobImplService implements JobServices {
         }
         System.out.println("job service"+jobAdd);
         return jobMapper.toDto(jobRepository.save(jobAdd));
-
-
     }
 
     @Override

@@ -189,7 +189,7 @@ public class CandidateController {
     }
 
     @GetMapping("/send-email/{candidateId}")
-    public String searchCandidate(HttpSession session, Model model, RedirectAttributes redirectAttributes, @PathVariable String candidateId) {
+    public String sendEmail(HttpSession session, Model model, RedirectAttributes redirectAttributes, @PathVariable String candidateId) {
         UserDto user = session.getAttribute("userLogin") != null ? (UserDto) session.getAttribute("userLogin") : null;
         CompanyDto companyDto = companyModels.getCompanyById(user.getId());
 
