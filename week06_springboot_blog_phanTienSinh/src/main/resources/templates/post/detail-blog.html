@@ -54,6 +54,7 @@
 <!--    </div>-->
 <!--</nav>-->
 <div th:insert="fragments/navbar :: nav"></div>
+
 <main class="container py-4">
     <article class="bg-white rounded-3 shadow-sm overflow-hidden">
         <img src="https://picsum.photos/1200/600" class="img-fluid featured-image w-100" alt="Featured post image">
@@ -99,9 +100,9 @@
         <h3 class="mb-4">Comments</h3>
         <div class="card">
             <div class="card-body">
-                <form>
+                <form th:action="@{/post/comment}" method="post" th:object="${post_comment}">
                     <div class="mb-3">
-                        <textarea class="form-control" rows="3" placeholder="Write a comment..."></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Write a comment..." th:field="*{content}"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Post Comment</button>
                 </form>
@@ -112,7 +113,8 @@
                         <div>
                             <h6 class="mb-1" th:text="${postComment.user.firstName + ' ' + postComment.user.lastName}"></h6>
                             <p class="mb-1" th:text="${postComment.content}"></p>
-                            <small class="text-muted" th:text="${#temporals.format(postComment.createdAt, 'dd-MM-yy HH:mm')}"></small>
+                            <small class="text-muted mb-1" th:text="${#temporals.format(postComment.createdAt, 'dd-MM-yy HH:mm')}"></small> <br>
+                            <a th:href="@{/}" class="">Reply</a>
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@
 
 package vn.edu.iuh.fit.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.Instant;

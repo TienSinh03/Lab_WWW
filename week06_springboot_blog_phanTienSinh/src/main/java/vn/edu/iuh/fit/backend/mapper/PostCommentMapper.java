@@ -7,6 +7,7 @@
 package vn.edu.iuh.fit.backend.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import vn.edu.iuh.fit.backend.dtos.PostCommentDTO;
 import vn.edu.iuh.fit.backend.models.PostComment;
 

@@ -41,6 +41,7 @@ public class AppController {
     @PostMapping("/do-login")
     public String login(HttpSession session , @ModelAttribute("user") UserDTO user) {
         UserDTO userDTO = userServices.findByEmailAndPassword(user.getEmail(), user.getPasswordHash());
+        System.out.println(userDTO);
         if (userDTO != null) {
             session.setAttribute("userLogin", userDTO);
             return "redirect:/post/home";
